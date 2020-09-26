@@ -1,0 +1,87 @@
+form.signup,
+form.login {
+  margin-top: 50px;
+}
+
+.navbar {
+  background-color: rgb(30, 30, 97);
+  text-align: center;
+  border-radius: 50px 50px 50px 50px;
+  box-shadow: 0 0 15px 4px;
+  margin: 2%;
+  margin-top: 20px;
+}
+
+.nav-item {
+  padding: 5px;
+  border-radius: 30px 30px 30px 30px;
+  transition-duration: 1s;
+  color: white;
+}
+
+.nav-item:hover, .nav-item.active:hover {
+  background-color: rgb(85, 115, 248);
+  border-radius: 30px 30px 30px 30px;
+}
+
+.nav-link, .navbar-brand {
+  color: white;
+}
+
+.nav-link:hover, .navbar-brand:hover {
+  color: black;
+}
+
+.hidden {
+  display: none;
+}
+
+body {
+  background-color: silver;
+}
+
+.container {
+  background-color: white;
+  border-radius: 30px 30px 30px 30px;
+  border-color: rgb(30, 30, 97);
+  border: 6px;
+  padding: 40px;
+  box-shadow: 0 0 15px 2px;
+}
+ 
+.container h2, .container h4 {
+  text-align: center;
+}
+
+.todo-list {
+  margin: 0 auto;
+  margin-top: 75px;
+}
+
+input.new-item:focus {
+  outline: none;
+}
+
+.list-group-item > button.delete,
+.list-group-item > button.complete {
+  float: right;
+  height: 25px;
+  margin-left: 5px;
+}
+
+.edit {
+  width: 100%;
+}
+
+.footer {
+  background-color: rgb(30, 30, 97);
+  text-align: center;
+  padding: 20px;
+  border-radius: 50px 50px 50px 50px;
+  box-shadow: 0 0 15px 4px;
+  margin: 2%;
+}
+
+.footer h4 {
+  color: white;
+}
