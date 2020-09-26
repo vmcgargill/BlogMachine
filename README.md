@@ -1,3 +1,5 @@
+# BlogMachine
+
 To get started, first install dependencies:
 
 ```
