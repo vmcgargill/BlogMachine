@@ -55,11 +55,6 @@ module.exports = function(app) {
 
   // Post New Blog
   app.post("/api/blogs", isAuthenticated, function(req, res) {
-    // if (!req.user) {
-    //   res.redirect("/login");
-    // } else {
-    // }
-    
     db.Blog.create({
       title: req.body.title,
       body: req.body.body,
