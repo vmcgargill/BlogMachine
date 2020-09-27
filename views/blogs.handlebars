@@ -1,12 +1,10 @@
 <h1>View all blogs here</h1>
 
 <select name="users" id="users">
-    <option value="volvo">All Users</option>
+    <option value="AllUsers">All Users</option>
     {{#each user }}
     <option value="{{id}}">{{name}}</option>
     {{/each}}
 </select>
 
-{{#each blog }}
-  <li class='list-group-item'>{{ id }}, {{ title }}, {{ body }}..., Created By: {{ UserName }} with an ID of {{ UserId }}</li>
-{{/each}}
+<div id="FilterBlogs"></div>

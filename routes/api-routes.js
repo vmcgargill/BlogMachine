@@ -2,6 +2,7 @@
 const db = require("../models");
 const passport = require("../config/passport");
 var isAuthenticated = require("../config/middleware/isAuthenticated");
+const { query } = require("express");
 
 module.exports = function(app) {
   
@@ -46,12 +47,59 @@ module.exports = function(app) {
     }
   });
 
-  // Get User Data
+  // Get All Blogs
   app.get("/api/blogs", function(req, res) {
-    db.Blog.findAll({}).then(function(blogs) {
-      res.json(blogs);
+    let query = {}
+
+    if (req.query.user_id) {
+      query.UserId = req.query.user_id;
+    }
+
+    db.Blog.findAll({
+      where: query,
+      include: [db.User] 
+    }).then(function(blogs) {
+
+      // Create array for all the blog objects
+      let BlogArray = new Array();
+      blogs.forEach((blog) => {
+        BlogArray.push({
+          id: blog.id,
+          title: blog.title,
+          body: blog.body.substring(0, 20),
+          UserId: blog.UserId,
+          UserName: blog.User.name
+        })
+      });
+
+      res.render("partials/filterblogs", { layout: false, blog: BlogArray });
     })
   });
+
+  // Get blogs posted by user
+  // app.get("/api/blogs/:UserId", function(req, res) {
+  //   db.Blog.findAll({
+  //     where: { UserId: req.params.UserId },
+  //     include: [db.User]
+  //   }).then(function(blogs) {
+  //     console.log(blogs)
+
+  //     // Create array for all the blog objects
+  //     let BlogArray = new Array();
+  //     blogs.forEach((blog) => {
+  //       BlogArray.push({
+  //         id: blog.id,
+  //         title: blog.title,
+  //         body: blog.body.substring(0, 20),
+  //         UserId: blog.UserId,
+  //         UserName: blog.User.name
+  //       })
+  //     });
+
+  //     res.render("partials/filterblogs", { layout: false, blog: BlogArray });
+  //   })
+  // });
+
 
   // Post New Blog
   app.post("/api/blogs", isAuthenticated, function(req, res) {
@@ -63,5 +111,6 @@ module.exports = function(app) {
       res.json(data);
     })
   });
+
 
 };

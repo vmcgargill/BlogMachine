@@ -49,18 +49,6 @@ module.exports = function(app) {
       include: [db.User]
     }).then(function(blogs) {
 
-      // Create array for all the blog objects
-      let BlogArray = new Array();
-      blogs.forEach((blog) => {
-        BlogArray.push({
-          id: blog.id,
-          title: blog.title,
-          body: blog.body.substring(0, 20),
-          UserId: blog.UserId,
-          UserName: blog.User.name
-        })
-      });
-
       // Create array for all the blog poststers
       let UserArray = new Array();
       blogs.forEach((blog) => {
@@ -74,10 +62,9 @@ module.exports = function(app) {
 
       res.render("blogs", {
         scripts: '/js/blogs.js',
-        blog: BlogArray,
         user: UserArray
       });
-    })
+    });
   });
 
   // Post New Blog
