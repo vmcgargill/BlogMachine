@@ -1,9 +1,25 @@
 $(document).ready(function() {
+
   // Getting references to our form and input
   const signUpForm = $("form.signup");
-  const nameInput = $("input#name-input")
+  const nameInput = $("input#name-input");
   const emailInput = $("input#email-input");
   const passwordInput = $("input#password-input");
+
+  function handleLoginErr() {
+    $("#alert .msg").text("Error: It looks like something went wrong. Please make sure your account does not already exists and try again.");
+    $("#alert").fadeIn(500);
+  }
+
+  function signUpUser(name, email, password) {
+    $.post("/api/signup", {
+      name: name,
+      email: email,
+      password: password
+    }).then(function() {
+      window.location.replace("/");
+    }).catch(handleLoginErr);
+  }
 
   // On Submit Click Event Listener
   signUpForm.on("submit", function(event) {
@@ -13,7 +29,7 @@ $(document).ready(function() {
     let email = emailInput.val().trim();
     let password = passwordInput.val().trim();
 
-    if(password.indexOf(' ') >= 0){
+    if(password.indexOf(" ") >= 0){
       $("#alert .msg").text("Error: Password cannot contain any spaces");
       $("#alert").fadeIn(500);
       passwordInput.val("");
@@ -39,19 +55,4 @@ $(document).ready(function() {
     emailInput.val("");
     passwordInput.val("");
   });
-
-  function signUpUser(name, email, password) {
-    $.post("/api/signup", {
-      name: name,
-      email: email,
-      password: password
-    }).then(function(data) {
-        window.location.replace("/");
-    }).catch(handleLoginErr);
-  }
-
-  function handleLoginErr(err) {
-    $("#alert .msg").text("Error: It looks like something went wrong. Please make sure your account does not already exists and try again.");
-    $("#alert").fadeIn(500);
-  }
 });

@@ -4,7 +4,7 @@ const passport = require("../config/passport");
 var isAuthenticated = require("../config/middleware/isAuthenticated");
 
 module.exports = function(app) {
-  
+
   // Post Login API
   app.post("/api/login", passport.authenticate("local"), function(req, res) {
     res.json(req.user);
@@ -23,9 +23,9 @@ module.exports = function(app) {
       hobbies: null,
       intrests: null
     }).then(function() {
-        res.redirect(307, "/api/login");
+      res.redirect(307, "/api/login");
     }).catch(function(err) {
-        res.status(401).json(err);
+      res.status(401).json(err);
     });
   });
 
@@ -50,7 +50,7 @@ module.exports = function(app) {
   app.get("/api/blogs", function(req, res) {
     db.Blog.findAll({}).then(function(blogs) {
       res.json(blogs);
-    })
+    });
   });
 
   // Post New Blog
@@ -61,7 +61,7 @@ module.exports = function(app) {
       UserId: req.user.id
     }).then(function(data) {
       res.json(data);
-    })
+    });
 
   });
 
