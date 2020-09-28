@@ -1,6 +1,6 @@
-var passport = require("passport");
-var LocalStrategy = require("passport-local").Strategy;
-var db = require("../models");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+const db = require("../models");
 
 // Create login middleware with passport-local strategy to handle failed login attempts
 passport.use(new LocalStrategy(

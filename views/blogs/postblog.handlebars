@@ -1,0 +1,45 @@
+<h1>Post new blogs here</h1>
+
+<div class="row">
+	<div class="col-md-6 offset-md-3">
+		<form id="submitForm">
+			<div class="form-group">
+				{{!-- Enter Title --}}
+				<label for="title">Title:</label>
+				<input placeholder="Post Title" type="text" class="form-control" id="title" maxlength="50">
+				<br/>
+				{{!-- Enter Body --}}
+				<label for="body">Body:</label>
+				<textarea placeholder="Post Body" class="form-control" rows="10" id="body" maxlength="100000"></textarea>
+				<br/>
+				{{!-- Select Category --}}
+				<label for="category">Select Category</label>
+				<select name="category" id="category" class="DropDowns">
+					{{#each category }}
+					<option value="{{id}}">{{name}}</option>
+					{{/each}}
+				</select><br>
+				{{!-- Select Mood --}}
+				<label for="mood">Select Mood</label>
+				<select name="mood" id="mood" class="DropDowns">
+					<option value="none">None</option>
+					<option value="Happy">Happy</option>
+					<option value="Cheerful">Cheerful</option>
+					<option value="Dreamy">Dreamy</option>
+					<option value="Sad">Sad</option>
+					<option value="Excited">Excited</option>
+					<option value="Angry">Angry</option>
+					<option value="Depressed">Depressed</option>
+					<option value="Confused">Confused</option>
+					<option value="Romantic">Romantic</option>
+					<option value="Silly">Silly</option>
+					<option value="other">Other</option>
+				</select><br>
+				<input placeholder="Enter Mood" type="text" class="form-control hidden" id="moodInput" maxlength="20"><br>
+				{{!-- Submit Blog --}}
+				<button type="submit" class="btn btn-success submit">Submit</button>
+			</div>
+		</form>
+        {{> error}}
+	</div>
+</div>

@@ -1,13 +1,38 @@
 $(document).ready(function() {
+
+    const MoodDropdown = $("#mood");
+
+    MoodDropdown.change(function() {
+        if (MoodDropdown.val() === "other") {
+            document.getElementById("moodInput").classList.remove("hidden");
+        } else {
+            document.getElementById("moodInput").classList.add("hidden");
+        }
+    })
+
+    const renderBloginputs = (Id) => {
+        // This does nothing yet!
+    }
+
+    function handleLoginErr() {
+        $("#alert .msg").text("Error: It looks like something went wrong. Please try again.");
+        $("#alert").fadeIn(500);
+      }
     
     // Submit blog
     const submitBlog = (event) => {
         event.preventDefault();
         let Id;
+        let mood = $("#mood").val();
         const url = window.location.search;
         const updating = false;
         const title = $("#title").val();
         const body = $("#body").val();
+        const category = $("#category").val();
+
+        if (mood === "other") {
+            mood = $("#moodInput").val();
+        }
     
         // Check if this is a blog being updated
         if (url.indexOf("?blog_id=") !== -1) {
@@ -25,7 +50,9 @@ $(document).ready(function() {
         if (updating === false) {
             $.post("/api/blogs", {
                 title: title,
-                body: body
+                body: body,
+                category: category,
+                mood: mood
             }).then(function() {
                 window.location.href = "/";
             }).catch(handleLoginErr)
@@ -37,20 +64,11 @@ $(document).ready(function() {
                 window.location.href = "/";
             }).catch(handleLoginErr)
         }
-
-        function handleLoginErr(err) {
-            $("#alert .msg").text("Error: It looks like something went wrong. Please try again.");
-            $("#alert").fadeIn(500);
-          }
-
+        
     }
     
     // Add on submit event listener
     $("#submitForm").on("submit", submitBlog);
-
-    const renderBloginputs = (Id) => {
-        // This does nothing yet!
-    }
 
   });
   

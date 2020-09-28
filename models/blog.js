@@ -13,6 +13,13 @@ module.exports = function(sequelize, DataTypes) {
       validate: {
         len: [0, 100000]
       }
+    },
+    mood: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        len: [0, 20]
+      }
     }
   });
 
@@ -22,6 +29,12 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false
       }
     });
+    Blog.belongsTo(models.Category, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
   }
+
   return Blog;
 };
