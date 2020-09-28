@@ -34,16 +34,21 @@ form.login {
   display: none;
 }
 
-.title, .body {
+.blogTitle {
   color: black;
-}
-
-.title {
   font-size: 20px;
 }
 
-.title:hover {
+.blogTitle:hover {
   color: blue;
+}
+
+a.blogBody {
+  display: block;
+  width: 500px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 body {

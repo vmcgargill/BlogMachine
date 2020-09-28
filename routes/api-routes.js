@@ -86,7 +86,7 @@ module.exports = function(app) {
         BlogArray.push({
           id: blog.id,
           title: blog.title,
-          body: blog.body.substring(0, 50),
+          body: blog.body,
           UserId: blog.UserId,
           UserName: blog.User.name,
           mood: blog.mood,
