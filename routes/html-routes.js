@@ -19,8 +19,8 @@ module.exports = function(app) {
           email: user.email
         })
       });
-      res.render("members", {
-        scripts: '/js/members.js',
+      res.render("users/members", {
+        scripts: '/js/users/members.js',
         user: UserArray
       });
     })
@@ -54,8 +54,8 @@ module.exports = function(app) {
       // Remove duplicates from the array
       Category = [...new Map(Category.map(category => [category.id, category])).values()];
 
-      res.render("blogs", {
-        scripts: '/js/blogs.js',
+      res.render("blogs/blogs", {
+        scripts: '/js/blogs/blogs.js',
         user: UserArray,
         category: Category
       });
@@ -76,14 +76,12 @@ module.exports = function(app) {
         category: blog.Category.name
       };
       
-      let handlebarTemp = "blog";
-      let handlbarScripts = "/js/blog.js";
+      let handlebarTemp = "partials/viewblog";
+      let handlbarScripts = "/js/blogs/blog.js";
       
-      if (req.user) {
-        if (req.user.id === blog.UserId) {
-          handlebarTemp = "userblog";
-          handlbarScripts = "/js/userblog.js"
-        }
+      if (req.user && req.user.id === blog.UserId) {
+        handlebarTemp = "blogs/userblog";
+        handlbarScripts = "/js/blogs/userblog.js"
       }
 
       res.render(handlebarTemp, {
@@ -105,8 +103,8 @@ module.exports = function(app) {
         });
       });
 
-      res.render("postblog", {
-        scripts: '/js/postblog.js',
+      res.render("blogs/postblog", {
+        scripts: '/js/blogs/postblog.js',
         category: CategoryArray
       });
     });
@@ -114,7 +112,8 @@ module.exports = function(app) {
 
   // Edit Blog
   app.get("/editBlog/", isAuthenticated, function(req, res) {
-    res.render("postblog", {scripts: '/js/postblog.js'});
+    // TODO: Add edit blog feature.
+    res.render("blogs/postblog/?blog_id=", {scripts: '/js/postblog.js'});
   });
 
   // Get Sign In User Profile
@@ -145,8 +144,8 @@ module.exports = function(app) {
           body: blog.body,
           mood: blog.mood,
           category: blog.Category.name
-        })
-      })
+        });
+      });
 
       let MemberObject = {
         id: member.id,
@@ -160,23 +159,31 @@ module.exports = function(app) {
         intrests: member.intrests
       };
 
-      res.render("member", {
+      let handlebarTemp = "partials/viewmember";
+      let handlebarScripts = "/js/users/viewmember.js";
+
+      if (req.user && req.user.id === member.id) {
+        handlebarTemp = "users/userprofile";
+        handlebarScripts = "/js/users/userprofile.js"
+      };
+
+      res.render(handlebarTemp, {
         member: MemberObject,
         blog: MemberBlogs,
-        scripts: '/js/member.js'
+        scripts: handlebarScripts
       });
-    })
+    });
   });
 
   // Edit User Profile
   app.get("/editProfile", isAuthenticated, function(req, res) {
-    res.render("editprofile", {scripts: '/js/editprofile.js'});
+    res.render("users/editprofile/?user_id=", {scripts: '/js/users/editprofile.js'});
   });
 
   // Login to Site
   app.get("/login", function(req, res) {
     if (req.user) {
-      res.redirect("/", {scripts: '/js/home.js'});
+      res.redirect("/");
     }
     res.render("login", {scripts: '/js/login.js'});
   });
@@ -184,7 +191,7 @@ module.exports = function(app) {
   // Sign Up Account
   app.get("/signup", function(req, res) {
     if (req.user) {
-      res.redirect("/", {scripts: '/js/home.js'});
+      res.redirect("/");
     }
     res.render("signup", {scripts: '/js/signup.js'});
   });
