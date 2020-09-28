@@ -36,9 +36,11 @@ $("#SearchFilteresBlogs").keyup(function() {
     let SearchFilteresBlogs = document.getElementById("SearchFilteresBlogs").value.toUpperCase();
     let BlogList = document.getElementById("BlogList").getElementsByTagName("li");
     for (let i = 0; i < BlogList.length; i++) {
-        let BlogTitles = BlogList[i].getElementsByTagName("a")[0, 1];
+        let BlogTitles = BlogList[i].getElementsByTagName("a")[0];
+        let BlogDescriptions = BlogList[i].getElementsByTagName("a")[1];
         let titleText = BlogTitles.textContent || BlogTitles.innerText;
-        if (titleText.toUpperCase().indexOf(SearchFilteresBlogs) > -1) {
+        let descriptionText = BlogDescriptions.textContent || BlogDescriptions.innerText
+        if (titleText.toUpperCase().indexOf(SearchFilteresBlogs) > -1 || descriptionText.toUpperCase().indexOf(SearchFilteresBlogs) > -1) {
             BlogList[i].style.display = "";
         } else {
             BlogList[i].style.display = "none";
