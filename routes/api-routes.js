@@ -10,7 +10,7 @@ module.exports = function(app) {
     res.json(req.user);
   });
 
-  // Post Signup API
+  // Post Account API, Signup for Account
   app.post("/api/signup", function(req, res) {
     db.User.create({
       name: req.body.name,
@@ -40,6 +40,16 @@ module.exports = function(app) {
       });
     }
   });
+
+  // Edit Account API
+  app.put("/api/editProfile", isAuthenticated, function(req, res) {
+    // TODO: Add edit account feature
+  });
+
+  // Delete Account API
+  app.delete("/api/deleteProfile", isAuthenticated, function(req, res) {
+    // TODO: Add delete account feature
+  })
 
   // Get All Blogs & Render Handlebar Templates
   app.get("/api/blogs", function(req, res) {
@@ -118,4 +128,13 @@ module.exports = function(app) {
     })
   });
 
+  // Edit Blogs API
+  app.put("/api/blogs", isAuthenticated, function(req, res) {
+    // TODO: Add edit blog API
+  })
+
+  // Delete Blogs API
+  app.delete("/api/blogs", isAuthenticated, function(req, res) {
+    // TODO: Add delete blog feature
+  })
 };

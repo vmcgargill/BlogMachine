@@ -112,8 +112,11 @@ module.exports = function(app) {
 
   // Edit Blog
   app.get("/editBlog/", isAuthenticated, function(req, res) {
-    // TODO: Add edit blog feature.
-    res.render("blogs/postblog/?blog_id=", {scripts: '/js/postblog.js'});
+    // TODO: Add edit blog feature. 
+    // - Make sure user making request is owner of the blog. This can be done by checking the req.url and seeing what blog_id it's on.
+    // - Also make a DB query that gets the blog categories so we can display in the dropdown.
+    console.log(req.url)
+    res.render("blogs/postblog", {scripts: '/js/postblog.js'});
   });
 
   // Get Sign In User Profile
@@ -177,7 +180,20 @@ module.exports = function(app) {
 
   // Edit User Profile
   app.get("/editProfile", isAuthenticated, function(req, res) {
-    res.render("users/editprofile/?user_id=", {scripts: '/js/users/editprofile.js'});
+    // TODO: Add edit profile feature.
+    // - Make sure user making request is owner of the account. This can be done by checking the req.url and seeing what user_id it's on.
+    // - Also make a DB query that gets the user so we can display in the dropdown.
+    console.log(req.url)
+    res.render("users/editprofile", {scripts: '/js/users/editprofile.js'});
+  });
+
+  // Edit User Profile
+  app.get("/deleteProfile", isAuthenticated, function(req, res) {
+    // TODO: Add delete profile feature.
+    // - Make sure user making request is owner of the account. This can be done by checking the req.url and seeing what user_id it's on.
+    // - Make it so that the user has to enter their own password
+    console.log(req.url)
+    res.render("users/editprofile", {scripts: '/js/users/editprofile.js'});
   });
 
   // Login to Site
