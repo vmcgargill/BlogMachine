@@ -30,7 +30,7 @@ module.exports = function(app) {
     res.redirect("/");
   });
 
-  // Get User Data
+  // Get User Data - used for desplayin login/signup buttons on navbar
   app.get("/api/user_data", function(req, res) {
     if (!req.user) {
       res.json(null);
@@ -88,6 +88,7 @@ module.exports = function(app) {
     });
   });
 
+  // TODO: Search Blogs by Title Feature
   app.get("/api/blogSearch", function(req, res) {
     db.Blog.findAll({}).then(function(blogs) {
       let BlogArray = new Array();

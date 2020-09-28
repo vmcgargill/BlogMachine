@@ -92,6 +92,7 @@ module.exports = function(app) {
       });
     })
   })
+  
   // Post New Blog Page
   app.get("/postBlog", isAuthenticated, function(req, res) {
     db.Category.findAll({}).then(function(catagories) {

@@ -19,16 +19,11 @@ DropDowns.change(function() {
         API += "/api/blogs/?order=ASC"
     }
 
-    if (UserId === "AllUsers") {
-        API += ""
-    } else {
+    if (UserId !== "AllUsers") {
         API += "&user_id=" + UserId;
     }
 
-
-    if (categoryId === "AllCategories") {
-        API += "";
-    } else {
+    if (categoryId !== "AllCategories") {
         API += "&category=" + categoryId;
     }
 
