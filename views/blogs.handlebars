@@ -1,10 +1,27 @@
-<h1>View all blogs here</h1>
+<h1>View All Blogs and Filter Here</h1><br>
 
-<select name="users" id="users">
+<label for="users">Filter by Author</label>
+<select name="users" id="users" class="DropDowns">
     <option value="AllUsers">All Users</option>
     {{#each user }}
     <option value="{{id}}">{{name}}</option>
     {{/each}}
-</select>
+</select><br>
+
+<label for="categories">Filter by Category</label>
+<select name="categories" id="categories" class="DropDowns">
+    <option value="AllCategories">All Categories</option>
+    {{#each category }}
+    <option value="{{id}}">{{name}}</option>
+    {{/each}}
+</select><br>
+
+<label for="age">Filter by Newst or Oldest</label>
+<select name="age" id="age" class="DropDowns">
+    <option value="newest">Newset First</option>
+    <option value="oldest">Oldest First</option>
+</select><br>
+
+<input type="text", id="SearchFilteresBlogs" placeholder="Search Filtered List"><br><br>
 
 <div id="FilterBlogs"></div>

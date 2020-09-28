@@ -1,8 +1,7 @@
 // Requiring our models and passport as we've configured it
 const db = require("../models");
 const passport = require("../config/passport");
-var isAuthenticated = require("../config/middleware/isAuthenticated");
-const { query } = require("express");
+const isAuthenticated = require("../config/middleware/isAuthenticated");
 
 module.exports = function(app) {
   
@@ -17,12 +16,7 @@ module.exports = function(app) {
       name: req.body.name,
       email: req.body.email,
       password: req.body.password,
-      picture: null,
-      title: null,
-      bio: null,
-      website: null,
-      hobbies: null,
-      intrests: null
+      picture: "/upload/default.png"
     }).then(function() {
         res.redirect(307, "/api/login");
     }).catch(function(err) {
@@ -47,17 +41,33 @@ module.exports = function(app) {
     }
   });
 
-  // Get All Blogs
+  // Get All Blogs & Render Handlebar Templates
   app.get("/api/blogs", function(req, res) {
-    let query = {}
-
+    let query = {};
+    let limit;
+    let order;
+    
+    if (req.query.order) {
+      order = [[ "createdAt", req.query.order ]]
+    }
+    
     if (req.query.user_id) {
       query.UserId = req.query.user_id;
     }
 
+    if (req.query.limit) {
+      limit = parseInt(req.query.limit);
+    }
+
+    if (req.query.category) {
+      query.CategoryId = req.query.category;
+    }
+
     db.Blog.findAll({
       where: query,
-      include: [db.User] 
+      limit: limit,
+      order: order,
+      include: [db.User, db.Category]
     }).then(function(blogs) {
 
       // Create array for all the blog objects
@@ -66,51 +76,45 @@ module.exports = function(app) {
         BlogArray.push({
           id: blog.id,
           title: blog.title,
-          body: blog.body.substring(0, 20),
+          body: blog.body.substring(0, 50),
           UserId: blog.UserId,
-          UserName: blog.User.name
-        })
+          UserName: blog.User.name,
+          mood: blog.mood,
+          category: blog.Category.name
+        });
       });
 
       res.render("partials/filterblogs", { layout: false, blog: BlogArray });
-    })
+    });
   });
 
-  // Get blogs posted by user
-  // app.get("/api/blogs/:UserId", function(req, res) {
-  //   db.Blog.findAll({
-  //     where: { UserId: req.params.UserId },
-  //     include: [db.User]
-  //   }).then(function(blogs) {
-  //     console.log(blogs)
-
-  //     // Create array for all the blog objects
-  //     let BlogArray = new Array();
-  //     blogs.forEach((blog) => {
-  //       BlogArray.push({
-  //         id: blog.id,
-  //         title: blog.title,
-  //         body: blog.body.substring(0, 20),
-  //         UserId: blog.UserId,
-  //         UserName: blog.User.name
-  //       })
-  //     });
-
-  //     res.render("partials/filterblogs", { layout: false, blog: BlogArray });
-  //   })
-  // });
-
+  app.get("/api/blogSearch", function(req, res) {
+    db.Blog.findAll({}).then(function(blogs) {
+      let BlogArray = new Array();
+      blogs.forEach((blog) => {
+        BlogArray.push(blog.title)
+      });
+      res.json(BlogArray)
+    })
+  })
 
   // Post New Blog
   app.post("/api/blogs", isAuthenticated, function(req, res) {
+
+    let mood = req.body.mood;
+    if (mood === "none") {
+      mood = null;
+    }
+    
     db.Blog.create({
       title: req.body.title,
       body: req.body.body,
-      UserId: req.user.id
+      UserId: req.user.id,
+      CategoryId: req.body.category,
+      mood: mood
     }).then(function(data) {
       res.json(data);
     })
   });
-
 
 };

@@ -10,30 +10,40 @@ form.login {
   box-shadow: 0 0 15px 4px;
   margin: 2%;
   margin-top: 20px;
+  padding: 30px;
 }
 
 .nav-item {
   padding: 5px;
-  border-radius: 30px 30px 30px 30px;
-  transition-duration: 1s;
   color: white;
-}
-
-.nav-item:hover, .nav-item.active:hover {
-  background-color: rgb(85, 115, 248);
-  border-radius: 30px 30px 30px 30px;
 }
 
 .nav-link, .navbar-brand {
   color: white;
+  border-radius: 20px 20px 20px 20px;
+  transition-duration: 1s;
 }
 
 .nav-link:hover, .navbar-brand:hover {
   color: black;
+  border-radius: 20px 20px 20px 20px;
+  background-color: rgb(85, 115, 248);
 }
 
 .hidden {
   display: none;
+}
+
+.title, .body {
+  color: black;
+}
+
+.title {
+  font-size: 20px;
+}
+
+.title:hover {
+  color: blue;
 }
 
 body {

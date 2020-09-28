@@ -1,3 +1,10 @@
-{{#each blog }}
-  <li class='list-group-item'>{{ id }}, {{ title }}, {{ body }}..., Created By: {{ UserName }} with an ID of {{ UserId }}</li>
-{{/each}}
+<ul id="BlogList">
+  {{#each blog }}
+    <li class='list-group-item blog-item'>
+      <a href="/blog/{{ id }}" class="title">{{title}}</a> <br>
+      <a class="body">{{ body }}</a>... <br>
+      Author: <a href="/member/{{ UserId }}">{{ UserName }}</a> <br>
+      Category: {{ category }} <br>
+      Mood: {{ mood }}</li>
+  {{/each}}
+</ul>
