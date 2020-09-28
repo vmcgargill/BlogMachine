@@ -14,9 +14,9 @@ DropDowns.change(function() {
 
 
     if (age === "newest") {
-        API += "/api/blogs/?order=DESC&"
+        API += "/api/blogs/?order=DESC"
     } else if (age === "oldest") {
-        API += "/api/blogs/?order=ASC&"
+        API += "/api/blogs/?order=ASC"
     }
 
     if (UserId === "AllUsers") {
