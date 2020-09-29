@@ -16,7 +16,7 @@ $(document).ready(function() {
       return;
     }
 
-    if (password.length > 8) {
+    if (password.length < 8) {
       $("#alert .msg").text("Error: Password length is too short and must be at 8 characters long.");
       $("#alert").fadeIn(500);
       passwordInput.val("");
