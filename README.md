@@ -1,5 +1,9 @@
 # BlogMachine
 
+An ap where users can sign into their account and make blog posts.
+
+Heroku Live Link: https://blog-machine.herokuapp.com/
+
 To get started, first install dependencies:
 
 ```
