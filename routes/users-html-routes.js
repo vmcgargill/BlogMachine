@@ -1,6 +1,5 @@
 // Requiring our models and passport as we've configured it
 const db = require("../models");
-const passport = require("../config/passport");
 const isAuthenticated = require("../config/middleware/isAuthenticated");
 
 module.exports = function(app) {
@@ -24,7 +23,7 @@ module.exports = function(app) {
   });
 
   // Get Sign In User Profile
-  app.get("/UserProfile", function(req, res) {
+  app.get("/UserProfile", isAuthenticated, function(req, res) {
     if (req.user) {
       res.redirect("/member/" + req.user.id);
     }

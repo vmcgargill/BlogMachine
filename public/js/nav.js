@@ -9,7 +9,7 @@ $(document).ready(function(){
         }
     });
 
-    $.get("/api/blogSearch").then(function(data) {
+    $.get("/api/blogSearchSuggestions").then(function(data) {
         $('#SearchBlogInput').autocomplete({
             source: data
         });

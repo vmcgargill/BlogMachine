@@ -1,6 +1,4 @@
-// Requiring our models and passport as we've configured it
 const db = require("../models");
-const passport = require("../config/passport");
 const isAuthenticated = require("../config/middleware/isAuthenticated");
 
 module.exports = function(app) {
@@ -52,8 +50,8 @@ module.exports = function(app) {
     });
   });
 
-  // TODO: Search Blogs by Title Feature
-  app.get("/api/blogSearch", function(req, res) {
+  // Get Blog Search Suggestions
+  app.get("/api/blogSearchSuggestions", function(req, res) {
     db.Blog.findAll({}).then(function(blogs) {
       let BlogArray = new Array();
       blogs.forEach((blog) => {
@@ -61,6 +59,11 @@ module.exports = function(app) {
       });
       res.json(BlogArray)
     })
+  })
+
+  // Get Blog Search by title
+  app.get("/api/blogSearch", function(req, res) {
+    // TODO
   })
 
   // Post New Blog

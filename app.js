@@ -28,6 +28,8 @@ require("./routes/blogs-html-routes.js")(app);
 require("./routes/blogs-api-routes.js")(app);
 require("./routes/users-html-routes.js")(app);
 require("./routes/users-api-routes.js")(app);
+require("./routes/categories-html-routes.js")(app);
+require("./routes/categories-api-routes.js")(app);
 
 // Syncronize Sequelize and initialize the server listener
 db.sequelize.sync().then(function() {
