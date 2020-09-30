@@ -1,9 +1,9 @@
-$(document).ready(function() {
+// $(document).ready(function() {
 
     const MoodDropdown = $("#mood");
     const url = window.location.search;
     let Id;
-    const updating = false;
+    let updating = false;
 
     MoodDropdown.change(function() {
         if (MoodDropdown.val() === "other") {
@@ -14,6 +14,12 @@ $(document).ready(function() {
     })
 
     const renderBloginputs = (Id) => {
+        $.get("/api/blogs/" + Id).then(function (data) {
+            $("#mood").val();
+            $("#title").val(data.title);
+            $("#body").val(data.body);
+            // $("#category").val(data.CategoryId);
+        })
         // This does nothing yet!
     }
 
@@ -71,5 +77,5 @@ $(document).ready(function() {
     // Add on submit event listener
     $("#submitForm").on("submit", submitBlog);
 
-  });
+//   });
   

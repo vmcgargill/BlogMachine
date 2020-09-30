@@ -95,4 +95,18 @@ module.exports = function(app) {
     // TODO: Add delete blog feature
   });
   
+  app.get("/api/blogs/:id", isAuthenticated, function(req, res) {
+    db.Blog.findOne({
+      where: {Id: req.params.id}
+    }).then(function(data) {
+    let blog = {
+      id: data.id,
+      catagory: data.CategoryId,
+      body: data.body,
+      title: data.title
+    }
+    res.json(blog)
+  })
+    
+  })
 };
