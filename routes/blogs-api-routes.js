@@ -70,7 +70,7 @@ module.exports = function(app) {
   app.post("/api/blogs", isAuthenticated, function(req, res) {
 
     let mood = req.body.mood;
-    if (mood === "none") {
+    if (mood === "None") {
       mood = null;
     }
     
@@ -86,8 +86,9 @@ module.exports = function(app) {
   });
 
   // Edit Blogs API
-  app.put("/api/blogs", isAuthenticated, function(req, res) {
+  app.put("/api/blogs/:id", isAuthenticated, function(req, res) {
     // TODO: Add edit blog API
+    console.log(req.params.id)
   })
 
   // Delete Blogs API
@@ -95,15 +96,17 @@ module.exports = function(app) {
     // TODO: Add delete blog feature
   });
   
+  // Get blog information by id
   app.get("/api/blogs/:id", isAuthenticated, function(req, res) {
     db.Blog.findOne({
       where: {Id: req.params.id}
     }).then(function(data) {
     let blog = {
       id: data.id,
-      catagory: data.CategoryId,
+      CategoryId: data.CategoryId,
       body: data.body,
-      title: data.title
+      title: data.title,
+      mood: data.mood
     }
     res.json(blog)
   })

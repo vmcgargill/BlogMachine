@@ -1,26 +1,44 @@
-// $(document).ready(function() {
+$(document).ready(function() {
 
     const MoodDropdown = $("#mood");
+    const moodInput = $("#moodInput");
     const url = window.location.search;
     let Id;
     let updating = false;
 
     MoodDropdown.change(function() {
-        if (MoodDropdown.val() === "other") {
-            document.getElementById("moodInput").classList.remove("hidden");
+        if (MoodDropdown.val() === "Other") {
+            moodInput.removeClass("hidden");
         } else {
-            document.getElementById("moodInput").classList.add("hidden");
+            moodInput.addClass("hidden");
         }
     })
 
     const renderBloginputs = (Id) => {
         $.get("/api/blogs/" + Id).then(function (data) {
-            $("#mood").val();
+            $("#moodInput").val(data.mood);
             $("#title").val(data.title);
             $("#body").val(data.body);
-            // $("#category").val(data.CategoryId);
-        })
-        // This does nothing yet!
+            $("#category").val(data.CategoryId);
+
+            
+            if (data.mood === null) {
+                MoodDropdown.val("None");
+            } else {
+                let MoodOpt = document.getElementsByClassName("MoodOpt");
+                for (let index = 0; index < MoodOpt.length; index++) {
+                    const MoodVal = MoodOpt[index].value;
+                    if (MoodVal === data.mood) {
+                        MoodDropdown.val(data.mood);
+                        moodInput.addClass("hidden");
+                        return;
+                    } else {
+                        MoodDropdown.val("Other");
+                        moodInput.removeClass("hidden");
+                    }
+                }
+            }
+        });
     }
 
     // Check if this is a blog being updated
@@ -43,7 +61,7 @@
         const body = $("#body").val();
         const category = $("#category").val();
 
-        if (mood === "other") {
+        if (mood === "Other") {
             mood = $("#moodInput").val();
         }
     
@@ -54,21 +72,25 @@
             return;
         }
 
+        let BlogData = {
+            title: title,
+            body: body,
+            category: category,
+            mood: mood
+        }
+
         if (updating === false) {
-            $.post("/api/blogs", {
-                title: title,
-                body: body,
-                category: category,
-                mood: mood
-            }).then(function() {
+            $.post("/api/blogs", BlogData).then(function(data) {
+                console.log(data)
                 window.location.href = "/";
             }).catch(handleLoginErr)
         } else if (updating === true) {
-            $.put("/api/blogs/" + Id, {
-                title: title,
-                body: body
+            $.ajax({
+                method: "PUT",
+                url: "/api/blogs/" + Id,
+                data: BlogData
             }).then(function() {
-                window.location.href = "/";
+                window.location.href = "/blogs/" +Id;
             }).catch(handleLoginErr)
         }
         
@@ -77,5 +99,5 @@
     // Add on submit event listener
     $("#submitForm").on("submit", submitBlog);
 
-//   });
+  });
   
