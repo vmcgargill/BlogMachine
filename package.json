@@ -4,8 +4,11 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "test": "npm run lint",
+    "lint": "eslint --quiet .",
+    "fix": "eslint --fix .",
+    "start": "node app.js",
+    "watch": "nodemon app.js"
   },
   "author": "",
   "license": "ISC",
