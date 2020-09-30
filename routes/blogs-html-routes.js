@@ -99,8 +99,8 @@ module.exports = function(app) {
           id: category.id,
           name: category.name
         });
-        res.render("blogs/postblog", {scripts: '/js/blogs/postblog.js'});
       });
+      res.render("blogs/postblog", {scripts: '/js/blogs/postblog.js', category: CategoryArray});
     })
   });
 };
