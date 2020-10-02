@@ -14,7 +14,7 @@ module.exports = function(app) {
       name: req.body.name,
       email: req.body.email,
       password: req.body.password,
-      picture: "/upload/default.png"
+      picture: "/default/default.png"
     }).then(function() {
         res.redirect(307, "/api/login");
     }).catch(function(err) {

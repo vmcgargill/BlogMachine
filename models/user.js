@@ -29,14 +29,14 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: true,
       validate: {
-        len: [0, 20]
+        len: [0, 50]
       }
     },
     bio: {
       type: DataTypes.TEXT,
       allowNull: true,
       validate: {
-        len: [0, 1000]
+        len: [0, 10000]
       }
     },
     website: {
@@ -50,14 +50,14 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.TEXT,
       allowNull: true,
       validate: {
-        len: [0, 500]
+        len: [0, 5000]
       }
     },
     intrests: {
       type: DataTypes.TEXT,
       allowNull: true,
       validate: {
-        len: [0, 500]
+        len: [0, 5000]
       }
     }
   });

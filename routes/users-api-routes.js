@@ -1,6 +1,9 @@
 // Requiring our models and passport as we've configured it
 const db = require("../models");
 const isAuthenticated = require("../config/middleware/isAuthenticated");
+const fs = require('fs');
+const path = require("path");
+const upload = require("../config/multer")
 
 module.exports = function(app) {
 
@@ -16,13 +19,33 @@ module.exports = function(app) {
   });
 
     // Edit Account API
-  app.put("/api/editProfile", isAuthenticated, function(req, res) {
-    console.log(req.body)
-    db.User.update(
-      { picture: req.body.picture },
-      { where: {id: req.user.id} }
-    ).then(function(data) {res.json(data)})
-    // TODO: Add edit account feature
+  app.put("/api/editProfile", isAuthenticated, upload.single("picture"), function(req, res) {
+    let oldPicture = req.user.picture;
+    
+    let query = {
+      name: req.body.name,
+      email: req.body.email,
+      title: req.body.title,
+      bio: req.body.bio,
+      hobbies: req.body.hobbies,
+      intrests: req.body.intrests,
+      website: req.body.website
+    }
+    
+    if (req.file) {
+      query.picture = "/upload/" + req.file.filename;
+    }
+    
+    // if (oldPicture !== "/default/default.png") {
+      // fs.unlinkSync(path.join(__dirname, "../public" + oldPicture));
+    //   // db.User.findOne({ where: {id: req.user.id}}).then(function(user) {
+    //   // })
+    // }
+    
+    db.User.update(query, { where: {id: req.user.id} }).then(function() {
+      res.json({});
+    });
+
   });
 
   // Delete Account API
