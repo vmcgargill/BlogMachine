@@ -39,7 +39,8 @@ module.exports = function(app) {
         include: {
           model: db.Category
         }
-      }
+      },
+      order: [[ db.Blog, "createdAt", "DESC" ]],
     }).then(function(member) {
 
       let MemberBlogs = new Array();
