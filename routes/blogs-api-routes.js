@@ -42,7 +42,8 @@ module.exports = function(app) {
           UserId: blog.UserId,
           UserName: blog.User.name,
           mood: blog.mood,
-          category: blog.Category.name
+          category: blog.Category.name,
+          memberPicture: blog.User.picture
         });
       });
 
@@ -87,20 +88,17 @@ module.exports = function(app) {
 
   // Edit Blogs API
   app.put("/api/blogs/:id", isAuthenticated, function(req, res) {
-    db.Blog.update(
-      {title: req.body.title,
+    db.Blog.update({
+      title: req.body.title,
       CategoryId: req.body.category,
       body: req.body.body,
-      mood: req.body.mood},
-        {
+      mood: req.body.mood
+    }, {
       where: {id: req.params.id}
     }).then(function(data) {
       res.json(data)
-      }
-    )
-    // TODO: Add edit blog API
-    console.log(req.params.id)
-  })
+    });
+  });
 
   // Delete Blogs API
   app.delete("/api/blogs/:id", isAuthenticated, function(req, res) {

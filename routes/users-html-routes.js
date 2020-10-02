@@ -12,7 +12,8 @@ module.exports = function(app) {
         UserArray.push({
           id: user.id,
           name: user.name,
-          email: user.email
+          email: user.email,
+          picture: user.picture
         })
       });
       res.render("users/members", {
@@ -52,7 +53,8 @@ module.exports = function(app) {
           title: blog.title,
           body: blog.body,
           mood: blog.mood,
-          category: blog.Category.name
+          category: blog.Category.name,
+          memberPicture: member.picture
         });
       });
 
@@ -86,11 +88,21 @@ module.exports = function(app) {
 
   // Edit User Profile
   app.get("/editProfile", isAuthenticated, function(req, res) {
-    // TODO: Add edit profile feature.
-    // - Make sure user making request is owner of the account. This can be done by checking the req.url and seeing what user_id it's on.
-    // - Also make a DB query that gets the user so we can display in the dropdown.
-    console.log(req.url)
-    res.render("users/editprofile", {scripts: '/js/users/editprofile.js'});
+    db.User.findOne({ where: {id: req.user.id}}).then(function(user) {
+      let UserObject = {
+        name: user.name,
+        email: user.email,
+        title: user.title,
+        bio: user.bio,
+        hobbies: user.hobbies,
+        intrests: user.intrests,
+        website: user.website
+      }
+      res.render("users/editprofile", {
+        scripts: '/js/users/editprofile.js',
+        user: UserObject
+      });
+    })
   });
 
   // Edit User Profile

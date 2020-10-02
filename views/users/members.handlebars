@@ -1,5 +1,5 @@
 <h1>See All members here</h1>
 
 {{#each user }}
-  <li class='list-group-item'><a href="/member/{{ id }}">{{ name }}, {{ email }}</a></li>
+  <li class='list-group-item'><img src="{{ picture }}" alt="Profile Picture" width="100"><a href="/member/{{ id }}">{{ name }}, {{ email }}</a></li>
 {{/each}}
