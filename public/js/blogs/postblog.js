@@ -90,7 +90,7 @@ $(document).ready(function() {
                 url: "/api/blogs/" + Id,
                 data: BlogData
             }).then(function() {
-                window.location.href = "/blogs/" +Id;
+                window.location.href = "/blog/" +Id;
             }).catch(handleLoginErr)
         }
         
