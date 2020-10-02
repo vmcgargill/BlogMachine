@@ -103,8 +103,12 @@ module.exports = function(app) {
   })
 
   // Delete Blogs API
-  app.delete("/api/blogs", isAuthenticated, function(req, res) {
-
+  app.delete("/api/blogs/:id", isAuthenticated, function(req, res) {
+    db.Blog.destroy({
+      where: {id: req.params.id}
+    }).then(function(data) {
+      res.json(data)
+    })
     // TODO: Add delete blog feature
   });
   
