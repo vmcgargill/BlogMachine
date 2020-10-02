@@ -3,7 +3,7 @@
     <li class='list-group-item blog-item'>
       <a href="/blog/{{ id }}" class="blogTitle">{{title}}</a><br>
       <a class="blogBody">{{ body }}</a>
-      Author: <a href="/member/{{ UserId }}">{{ UserName }}</a><br>
+      Author: <a href="/member/{{ UserId }}">{{ UserName }}</a><img src="{{ memberPicture }}" alt="Profile Picture" width="100"><br> 
       Category: <a>{{ category }}</a><br>
       <a>Mood: {{ mood }}</a></li>
   {{/each}}

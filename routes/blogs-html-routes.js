@@ -53,7 +53,8 @@ module.exports = function(app) {
         title: blog.title,
         body: blog.body,
         mood: blog.mood,
-        category: blog.Category.name
+        category: blog.Category.name,
+        memberPicture: blog.User.picture
       };
       
       let handlebarTemp = "partials/viewblog";

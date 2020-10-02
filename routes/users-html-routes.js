@@ -12,7 +12,8 @@ module.exports = function(app) {
         UserArray.push({
           id: user.id,
           name: user.name,
-          email: user.email
+          email: user.email,
+          picture: user.picture
         })
       });
       res.render("users/members", {
@@ -52,7 +53,8 @@ module.exports = function(app) {
           title: blog.title,
           body: blog.body,
           mood: blog.mood,
-          category: blog.Category.name
+          category: blog.Category.name,
+          memberPicture: member.picture
         });
       });
 

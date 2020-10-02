@@ -42,7 +42,8 @@ module.exports = function(app) {
           UserId: blog.UserId,
           UserName: blog.User.name,
           mood: blog.mood,
-          category: blog.Category.name
+          category: blog.Category.name,
+          memberPicture: blog.User.picture
         });
       });
 
