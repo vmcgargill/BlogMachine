@@ -17,6 +17,11 @@ module.exports = function(app) {
 
     // Edit Account API
   app.put("/api/editProfile", isAuthenticated, function(req, res) {
+    console.log(req.body)
+    db.User.update(
+      { picture: req.body.picture },
+      { where: {id: req.user.id} }
+    ).then(function(data) {res.json(data)})
     // TODO: Add edit account feature
   });
 
