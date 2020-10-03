@@ -10,11 +10,11 @@ module.exports = function(app) {
             category.forEach((category) => {
               categoryArray.push({
                 
-                category: category.Category.name
+                name: category.name
               });
             });
       
-            res.render("partials/filtercategories", { layout: false, blog: categoryArray });
+            res.render("partials/viewcategory", { blog: categoryArray });
           });
         });
     }
