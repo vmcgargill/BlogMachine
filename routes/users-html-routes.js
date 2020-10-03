@@ -13,7 +13,11 @@ module.exports = function(app) {
           id: user.id,
           name: user.name,
           email: user.email,
-          picture: user.picture
+          picture: user.picture,
+          bio: user.bio,
+          hobbies: user.hobbies,
+          interests: user.interests,
+          title: user.title
         })
       });
       res.render("users/members", {
@@ -67,7 +71,7 @@ module.exports = function(app) {
         bio: member.bio,
         website: member.website,
         hobbies: member.hobbies,
-        intrests: member.intrests
+        interests: member.interests
       };
 
       let handlebarTemp = "partials/viewmember";
@@ -95,7 +99,7 @@ module.exports = function(app) {
         title: user.title,
         bio: user.bio,
         hobbies: user.hobbies,
-        intrests: user.intrests,
+        interests: user.interests,
         website: user.website
       }
       res.render("users/editprofile", {

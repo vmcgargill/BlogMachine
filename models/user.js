@@ -53,7 +53,7 @@ module.exports = function(sequelize, DataTypes) {
         len: [0, 5000]
       }
     },
-    intrests: {
+    interests: {
       type: DataTypes.TEXT,
       allowNull: true,
       validate: {

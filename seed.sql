@@ -1,5 +1,5 @@
 -- Insert into Categories
-INSERT INTO category (name)
+INSERT INTO Categories (name)
 VALUES 
 ("General"), 
 ("Social"),
@@ -8,4 +8,4 @@ VALUES
 ("Movies"),
 ("Sports"),
 ("Video Games"),
-("Recreational Activities")
+("Recreational Activities");

@@ -1,4 +1,4 @@
-<ul id="BlogList">
+{{!-- <ul id="BlogList">
   {{#each blog }}
     <li class='list-group-item blog-item'>
       <a href="/blog/{{ id }}" class="blogTitle">{{title}}</a><br>
@@ -7,4 +7,22 @@
       Category: <a>{{ category }}</a><br>
       <a>Mood: {{ mood }}</a></li>
   {{/each}}
-</ul>
+</ul> --}}
+
+{{#each blog }}
+  <div class="card" style="width: 18rem;">
+    <img class="card-img-top" src="{{ memberPicture }}" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">{{title}}</h5>
+      <p class="blogBody card-text">{{ body }}</p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Category: {{ category }}</li>
+      <li class="list-group-item">Mood: {{ mood }}</li>
+    </ul>
+    <div class="card-body">
+      <a href="/blog/{{ id }}" class="card-link">View Blog</a>
+      <a href="/member/{{ UserId }}" class="card-link">View Author</a>
+    </div>
+  </div>
+{{/each}}
