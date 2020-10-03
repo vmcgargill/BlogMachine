@@ -33,16 +33,22 @@ form.login {
   color: white;
 }
 
-.nav-link:hover, #SearchBlogBtn:hover, .btn:hover  {
+.nav-link:hover, #SearchBlogBtn:hover, .btn:hover, button:hover  {
   color: white;
-  background-color: rgb(48, 179, 184);
+  background-color: rgb(21, 28, 48);
   transition-duration: 1s;
 }
 
+/* Includes Search bar and buttons */
 button, input, #SearchBlogInput, select, .btn {
-  background-color: white;
   border-style: solid;
-  border-radius: 10px;
+  border-radius: 8px;
+  border-color: rgb(43, 80, 87);
+}
+
+/* Specifies buttons only */
+button, #SearchBlogBtn, .btn {
+  background-color: rgb(74, 158, 151);
 }
 
 .hidden {
@@ -81,9 +87,10 @@ body {
 .container {
   background-color: white;
   border-radius: 3px;
-  border-color: rgb(30, 30, 97);
+  border-color: rgb(43, 80, 87);
   border: 6px;
   padding: 40px;
+  margin-bottom: 5%; /*May or may not stay*/
 }
  
 .container h2, .container h4 {
@@ -110,15 +117,16 @@ input.new-item:focus {
   width: 100%;
 }
 
-.footer {
+.footer, footer {
   margin-top: 20px;
   padding: 10px;
   text-align: center;
-    width: 100%;
-    background-color:rgb(21, 28, 48);
-    color: white;
-    position: absolute;
+  width: 100%;
+  background-color:rgb(21, 28, 48);
+  color: white;
+  position: fixed;
   bottom: 0;
+  left: 0;
 }
 
 .footer h4 {
