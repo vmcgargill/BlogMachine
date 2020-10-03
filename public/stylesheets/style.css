@@ -1,6 +1,12 @@
-/* Todo: Card layout for profiles
-        align PROFILE to center*/
+.userCard {
+  width: 300px;
+  height: 600px;
+}
 
+.card {
+  border: solid 2px black;
+  margin-top: 20px;
+}
 
 form.signup,
 form.login {

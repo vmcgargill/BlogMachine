@@ -3,8 +3,8 @@
 <div class="row">
   {{#each user }}
     <div class="col">
-      <div class="card" style="width: 18rem;">
-        <a href="/member/{{ id }}"><img class="card-img-top" src="{{ picture }}" alt="Card image cap"></a>
+      <div class="card userCard">
+        <a href="/member/{{ id }}"><img class="card-img-top" src="{{ picture }}" style="max-height: 296; max-width: 296;" alt="User Picture"></a>
         <div class="card-body">
           <h5 class="card-title">{{name}}</h5>
           <p class="card-text">{{ bio }}</p>

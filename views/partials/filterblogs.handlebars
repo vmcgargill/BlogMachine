@@ -1,18 +1,18 @@
 <div class="row">
   <div class="col">
     {{#each blog }}
-      <div class="card">
+      <div class="card blogSearch">
         <div class="card-body">
-          <h5 class="card-title">{{title}}</h5>
-          <p class="blogBody card-text">{{ body }}</p>
+          <h5 class="card-title"><a>{{title}}</a></h5>
+          <p class="card-text"><a class="blogBody">{{ body }}</a></p>
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">Category: {{ category }}</li>
-          <li class="list-group-item">Mood: {{ mood }}</li>
+          <li class="list-group-item">Category: <a>{{ category }}</a></li>
+          <li class="list-group-item">Mood: <a>{{ mood }}</a></li>
         </ul>
         <div class="card-body">
           <a href="/blog/{{ id }}" class="card-link">View Blog</a>
-          <a href="/member/{{ UserId }}" class="card-link">View Author</a>
+          <a href="/member/{{ UserId }}" class="card-link">Author: {{UserName}}</a>
         </div>
       </div>
     {{/each}}
