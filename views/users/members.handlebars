@@ -1,33 +1,23 @@
 <h1>See All Members</h1>
 
-{{!-- {{#each user }}
-  <li class='list-group-item'><img src="{{ picture }}" alt="Profile Picture" width="100"><a href="/member/{{ id }}">{{ name }}, {{ email }}</a></li>
-{{/each}} --}}
-{{!-- 
-{{#each user }}
-  <div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="{{ picture }}" alt="Card image cap">
-    <div class="card-body">
-      <h5 class="card-title">{{ name }}</h5>
-      <p class="card-text">{{ bio }}</p>
+<div class="row">
+  {{#each user }}
+    <div class="col">
+      <div class="card" style="width: 18rem;">
+        <a href="/member/{{ id }}"><img class="card-img-top" src="{{ picture }}" alt="Card image cap"></a>
+        <div class="card-body">
+          <h5 class="card-title">{{name}}</h5>
+          <p class="card-text">{{ bio }}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Title: {{title}}</li>
+          <li class="list-group-item">Hobbies: {{hobbies}}</li>
+          <li class="list-group-item">Interests: {{interests}}</li>
+        </ul>
+        <div class="card-body">
+          <a href="/member/{{ id }}" class="card-link">View Profile</a>
+        </div>
+      </div>
     </div>
-  </div>
-{{/each}} --}}
-
-{{#each user }}
-<div class="card" style="width: 18rem;">
-  <img class="card-img-top" src="{{ picture }}" alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title">{{name}}</h5>
-    <p class="card-text">{{ bio }}</p>
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">Title: {{title}}</li>
-    <li class="list-group-item">Hobbies: {{hobbies}}</li>
-    <li class="list-group-item">Interests: {{interests}}</li>
-  </ul>
-  <div class="card-body">
-    <a href="/member/{{ id }}" class="card-link">View Profile</a>
-  </div>
+  {{/each}}
 </div>
-{{/each}}

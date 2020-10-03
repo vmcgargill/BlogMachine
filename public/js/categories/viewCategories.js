@@ -13,7 +13,7 @@ $("#deleteCategory").on("click", function () {
     if (deleteCategorySelect !== "selectCategory") {
         $.ajax({
             method: "DELETE",
-            url: "/api/categories/" + 6
+            url: "/api/categories/" + deleteCategorySelect
         }).then(function() {
             location.reload();
         })

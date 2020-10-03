@@ -33,6 +33,9 @@
     <div>
         <input id="SearchBlogInput" placeholder="Search Blogs by Title" type="text">
         <button id="SearchBlogBtn" class="button">Search</button>
-        {{> error}}
+        <div style="display: none" id="searchAlert" class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span> <span class="msg"></span>
+        </div>
     </div>
 </nav>

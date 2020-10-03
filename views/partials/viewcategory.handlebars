@@ -1,13 +1,13 @@
 {{!-- Select Category --}}
-				<label for="deleteCategory">Delete Category</label>
-				<select name="deleteCategory" id="deleteCategorySelect" class="DropDowns">
-                    <option value="selectCategory">Select Category</option>
-					{{#each category }}
-					<option value="{{id}}">{{name}}</option>
-					{{/each}}
-				</select>
-                <button class="deleteCategory" id="deleteCategory">Delete Category</button>
-                <br>
-                <label for="createCategory">Create Category</label>
-                <input type="text" name="createCategory" id="createCategoryInput" maxlength="50">
-                <button class="createCategory" id="createCategory">Create Category</button>
+<label for="deleteCategory">Delete Category</label>
+<select name="deleteCategory" id="deleteCategorySelect" class="DropDowns">
+    <option value="selectCategory">Select Category</option>
+    {{#each category }}
+    <option value="{{id}}">{{name}}</option>
+    {{/each}}
+</select>
+<button class="deleteCategory" id="deleteCategory">Delete Category</button>
+<br>
+<label for="createCategory">Create Category</label>
+<input type="text" name="createCategory" id="createCategoryInput" maxlength="50">
+<button class="createCategory" id="createCategory">Create Category</button>
