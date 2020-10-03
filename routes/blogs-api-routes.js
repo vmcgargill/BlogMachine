@@ -42,7 +42,8 @@ module.exports = function(app) {
           UserId: blog.UserId,
           UserName: blog.User.name,
           mood: blog.mood,
-          category: blog.Category.name
+          category: blog.Category.name,
+          memberPicture: blog.User.picture
         });
       });
 
@@ -70,7 +71,7 @@ module.exports = function(app) {
   app.post("/api/blogs", isAuthenticated, function(req, res) {
 
     let mood = req.body.mood;
-    if (mood === "none") {
+    if (mood === "None") {
       mood = null;
     }
     
@@ -86,13 +87,43 @@ module.exports = function(app) {
   });
 
   // Edit Blogs API
-  app.put("/api/blogs", isAuthenticated, function(req, res) {
-    // TODO: Add edit blog API
-  })
+  app.put("/api/blogs/:id", isAuthenticated, function(req, res) {
+    db.Blog.update({
+      title: req.body.title,
+      CategoryId: req.body.category,
+      body: req.body.body,
+      mood: req.body.mood
+    }, {
+      where: {id: req.params.id}
+    }).then(function(data) {
+      res.json(data)
+    });
+  });
 
   // Delete Blogs API
-  app.delete("/api/blogs", isAuthenticated, function(req, res) {
+  app.delete("/api/blogs/:id", isAuthenticated, function(req, res) {
+    db.Blog.destroy({
+      where: {id: req.params.id}
+    }).then(function(data) {
+      res.json(data)
+    })
     // TODO: Add delete blog feature
   });
   
+  // Get blog information by id
+  app.get("/api/blogs/:id", isAuthenticated, function(req, res) {
+    db.Blog.findOne({
+      where: {Id: req.params.id}
+    }).then(function(data) {
+    let blog = {
+      id: data.id,
+      CategoryId: data.CategoryId,
+      body: data.body,
+      title: data.title,
+      mood: data.mood
+    }
+    res.json(blog)
+  })
+    
+  })
 };

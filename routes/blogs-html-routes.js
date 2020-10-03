@@ -45,13 +45,16 @@ module.exports = function(app) {
       where: {id: req.params.id},
       include: [db.User, db.Category]
     }).then(function(blog) {
+      console.log(blog.id)
       let BlogObject = {
         UserName: blog.User.name,
+        id: blog.id,
         UserId: blog.UserId,
         title: blog.title,
         body: blog.body,
         mood: blog.mood,
-        category: blog.Category.name
+        category: blog.Category.name,
+        memberPicture: blog.User.picture
       };
       
       let handlebarTemp = "partials/viewblog";
@@ -90,11 +93,15 @@ module.exports = function(app) {
 
   // Edit Blog
   app.get("/editBlog/", isAuthenticated, function(req, res) {
-    // TODO: Add edit blog feature. 
-    // - Make sure user making request is owner of the blog. This can be done by checking the req.url and seeing what blog_id it's on.
-    // - Also make a DB query that gets the blog categories so we can display in the dropdown.
-    console.log(req.url)
-    res.render("blogs/postblog", {scripts: '/js/postblog.js'});
+    db.Category.findAll({}).then(function(data) {
+      let CategoryArray = new Array();
+      data.forEach((category) => {
+        CategoryArray.push({
+          id: category.id,
+          name: category.name
+        });
+      });
+      res.render("blogs/postblog", {scripts: '/js/blogs/postblog.js', category: CategoryArray});
+    })
   });
-
 };
