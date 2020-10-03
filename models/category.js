@@ -3,9 +3,7 @@ module.exports = function(sequelize, DataTypes) {
       name: {
         type: DataTypes.STRING,
         allowNull: false
-      },
-      createdAt: { type: DataTypes.STRING, allowNull: true },
-      updatedAt: { type: DataTypes.STRING, allowNull: true }
+      }
     });
   
     Category.associate = function(models) {

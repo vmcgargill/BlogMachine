@@ -42,7 +42,8 @@ module.exports = function(app) {
           UserId: blog.UserId,
           UserName: blog.User.name,
           mood: blog.mood,
-          category: blog.Category.name
+          category: blog.Category.name,
+          memberPicture: blog.User.picture
         });
       });
 
@@ -108,8 +109,12 @@ module.exports = function(app) {
   })
 
   // Delete Blogs API
-  app.delete("/api/blogs", isAuthenticated, function(req, res) {
-
+  app.delete("/api/blogs/:id", isAuthenticated, function(req, res) {
+    db.Blog.destroy({
+      where: {id: req.params.id}
+    }).then(function(data) {
+      res.json(data)
+    })
     // TODO: Add delete blog feature
   });
   

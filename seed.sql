@@ -1,5 +1,5 @@
 -- Insert into Categories
-INSERT INTO category (name)
+INSERT INTO Categories (name)
 VALUES 
 ("General"), 
 ("Social"),

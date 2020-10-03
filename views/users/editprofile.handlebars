@@ -1,1 +1,23 @@
-<h1>Edit user profile here</h1>
+<h1>Edit User Profile</h1>
+
+<br>
+<br>
+<form id="updateprofile">
+  <label for="name">Name:</label><br>
+  <input type="text" placeholder="Name" name="name" id="name" maxlength="50" value="{{user.name}}"><br><br>
+  <label for="email">Email:</label><br>
+  <input type="email" placeholder="Email" name="email" id="email" maxlength="50" value="{{user.email}}"><br><br>
+  <label for="title">Title:</label><br>
+  <input type="text" placeholder="Title" name="title" id="title" maxlength="50" value="{{user.title}}"><br><br>
+  <label for="bio">Bio:</label><br>
+  <textarea type="text" placeholder="Bio" name="bio" id="bio" rows="5" maxlength="1000">{{user.bio}}</textarea><br><br>
+  <label for="hobbies">Hobbies:</label><br>
+  <textarea type="text" placeholder="Hobbies" name="hobbies" id="hobbies" rows="3" maxlength="5000">{{user.hobbies}}</textarea><br><br>
+  <label for="interests">Interests:</label><br>
+  <textarea type="text" placeholder="Interests" name="interests" id="interests" rows="3" maxlength="5000">{{user.interests}}</textarea><br><br>
+  <label for="website">Website:</label><br>
+  <input type="text" placeholder="Website" name="website" id="website" maxlength="300" value="{{user.website}}"><br><br>
+  <label for="picture">Upload New Profile Picture:</label><br>
+  <input type="file" name="picture" id="picture" ><br><br>
+  <input type="submit">
+</form>
