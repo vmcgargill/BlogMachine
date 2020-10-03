@@ -1,5 +1,6 @@
 const db = require("../models");
 const isAuthenticated = require("../config/middleware/isAuthenticated");
+const isBlogOwner = require("../config/middleware/isBlogOwner");
 
 module.exports = function(app) {
 
@@ -39,7 +40,7 @@ module.exports = function(app) {
     });
   });
 
-  // View Blog
+  // View Blog Page
   app.get("/blog/:id", function(req, res) {
     db.Blog.findOne({
       where: {id: req.params.id},
@@ -92,22 +93,16 @@ module.exports = function(app) {
   });
 
   // Edit Blog
-  app.get("/editBlog/", isAuthenticated, function(req, res) {
-    db.Blog.findOne({where: {id: req.query.blog_id}}).then(function (Blog) {
-      if (Blog.UserId === req.user.id) {
-        db.Category.findAll({}).then(function(data) {
-            let CategoryArray = new Array();
-            data.forEach((category) => {
-              CategoryArray.push({
-                id: category.id,
-                name: category.name
-              });
-            });
-            res.render("blogs/postblog", {scripts: '/js/blogs/postblog.js', category: CategoryArray});
-          })
-      } else {
-        res.redirect("/");
-      }
+  app.get("/editBlog/", isAuthenticated, isBlogOwner, function(req, res) {
+    db.Category.findAll({}).then(function(data) {
+      let CategoryArray = new Array();
+      data.forEach((category) => {
+        CategoryArray.push({
+          id: category.id,
+          name: category.name
+        });
+      });
+      res.render("blogs/postblog", {scripts: '/js/blogs/postblog.js', category: CategoryArray});
     });
   });
 

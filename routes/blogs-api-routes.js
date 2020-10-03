@@ -1,5 +1,6 @@
 const db = require("../models");
 const isAuthenticated = require("../config/middleware/isAuthenticated");
+const isBlogOwner = require("../config/middleware/isBlogOwner");
 
 module.exports = function(app) {
 
@@ -87,29 +88,22 @@ module.exports = function(app) {
   });
 
   // Edit Blogs API
-  app.put("/api/blogs/:id", isAuthenticated, function(req, res) {
-    db.Blog.findOne(
-      {where: {id: req.params.id}}
-    ).then(function (blogValue) {
-      if (blogValue.UserId === req.user.id) {
-        db.Blog.update(
-          {title: req.body.title,
-          CategoryId: req.body.category,
-          body: req.body.body,
-          mood: req.body.mood},
-          {
-          where: {id: req.params.id}
-      }).then(function(data) {
-          res.json(data)
-      })
-      } else {
-        res.redirect("/")
-      }
+  app.put("/api/blogs/:id", isAuthenticated, isBlogOwner, function(req, res) {
+    db.Blog.update({
+        title: req.body.title,
+        CategoryId: req.body.category,
+        body: req.body.body,
+        mood: req.body.mood
+      }, {
+        where: {id: req.params.id}
+    }).then(function(data) {
+      res.json(data)
     })
+
   })
 
   // Delete Blogs API
-  app.delete("/api/blogs/:id", isAuthenticated, function(req, res) {
+  app.delete("/api/blogs/:id", isAuthenticated, isBlogOwner, function(req, res) {
     db.Blog.destroy({
       where: {id: req.params.id}
     }).then(function(data) {
