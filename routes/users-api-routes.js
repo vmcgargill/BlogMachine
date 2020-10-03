@@ -27,7 +27,7 @@ module.exports = function(app) {
       title: req.body.title,
       bio: req.body.bio,
       hobbies: req.body.hobbies,
-      intrests: req.body.intrests
+      interests: req.body.interests
     }
 
     // Function that DOBLE checks if string is URL so query does not crash

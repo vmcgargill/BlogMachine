@@ -9,7 +9,7 @@ $(document).ready(function() {
         formData.append("title", $("#title").val())
         formData.append("bio", $("#bio").val())
         formData.append("hobbies", $("#hobbies").val())
-        formData.append("intrests", $("#intrests").val())
+        formData.append("interests", $("#interests").val())
         formData.append("website", $("#website").val())
 
         const image = document.getElementById("picture");

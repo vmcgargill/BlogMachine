@@ -1,3 +1,7 @@
+/* Todo: Card layout for profiles
+        align PROFILE to center*/
+
+
 form.signup,
 form.login {
   margin-top: 50px;
@@ -33,22 +37,34 @@ form.login {
   color: white;
 }
 
-.nav-link:hover, #SearchBlogBtn:hover, .btn:hover, button:hover  {
+.nav-link:hover  {
   color: white;
   background-color: rgb(21, 28, 48);
   transition-duration: 1s;
 }
 
-/* Includes Search bar and buttons */
-button, input, #SearchBlogInput, select, .btn {
+button:hover, .btn:hover {
+  background-color: rgb(43, 80, 87);
+}
+
+#SearchBlogBtn:hover {
+  background-color: rgb(21, 28, 48);
+}
+
+/* search bar / selection */
+input, #SearchBlogInput, select {
   border-style: solid;
-  border-radius: 8px;
+  border-radius: 3px;
   border-color: rgb(43, 80, 87);
 }
 
 /* Specifies buttons only */
 button, #SearchBlogBtn, .btn {
   background-color: rgb(74, 158, 151);
+  border-style: solid;
+  border-radius: 5px;
+  border-color: rgb(43, 80, 87);
+  color: white;
 }
 
 .hidden {
@@ -95,6 +111,15 @@ body {
  
 .container h2, .container h4 {
   text-align: center;
+}
+
+.form-group {
+  margin-top: 20px;
+}
+
+/* Aligns sign up / login page to center */
+.row {
+  justify-content: center;
 }
 
 .todo-list {
