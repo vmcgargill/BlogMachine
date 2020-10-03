@@ -87,19 +87,24 @@ module.exports = function(app) {
 
   // Edit Blogs API
   app.put("/api/blogs/:id", isAuthenticated, function(req, res) {
-    db.Blog.update(
-      {title: req.body.title,
-      CategoryId: req.body.category,
-      body: req.body.body,
-      mood: req.body.mood},
-        {
-      where: {id: req.params.id}
-    }).then(function(data) {
-      res.json(data)
+    db.Blog.findOne(
+      {where: {id: req.params.id}}
+    ).then(function (blogValue) {
+      if (blogValue.UserId === req.user.id) {
+        db.Blog.update(
+          {title: req.body.title,
+          CategoryId: req.body.category,
+          body: req.body.body,
+          mood: req.body.mood},
+          {
+          where: {id: req.params.id}
+      }).then(function(data) {
+          res.json(data)
+      })
+      } else {
+        res.redirect("/")
       }
-    )
-    // TODO: Add edit blog API
-    console.log(req.params.id)
+    })
   })
 
   // Delete Blogs API
