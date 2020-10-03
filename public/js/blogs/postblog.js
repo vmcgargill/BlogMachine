@@ -12,8 +12,8 @@ $(document).ready(function() {
         } else {
             moodInput.addClass("hidden");
         }
-    })
-
+    });
+    
     const renderBloginputs = (Id) => {
         $.get("/api/blogs/" + Id).then(function (data) {
             $("#moodInput").val(data.mood);

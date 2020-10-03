@@ -8,4 +8,4 @@ VALUES
 ("Movies"),
 ("Sports"),
 ("Video Games"),
-("Recreational Activities");
+("Recreational Activities")
