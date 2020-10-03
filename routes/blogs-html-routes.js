@@ -93,15 +93,23 @@ module.exports = function(app) {
 
   // Edit Blog
   app.get("/editBlog/", isAuthenticated, function(req, res) {
-    db.Category.findAll({}).then(function(data) {
-      let CategoryArray = new Array();
-      data.forEach((category) => {
-        CategoryArray.push({
-          id: category.id,
-          name: category.name
-        });
-      });
-      res.render("blogs/postblog", {scripts: '/js/blogs/postblog.js', category: CategoryArray});
+    db.Blog.findOne({where: {id: req.query.blog_id}}).then(function (Blog) {
+      if (Blog.UserId === req.user.id) {
+        db.Category.findAll({}).then(function(data) {
+            let CategoryArray = new Array();
+            data.forEach((category) => {
+              CategoryArray.push({
+                id: category.id,
+                name: category.name
+              });
+            });
+            res.render("blogs/postblog", {scripts: '/js/blogs/postblog.js', category: CategoryArray});
+          })
+      } else {
+        res.redirect("/");
+      }
     })
+  
+
   });
 };
