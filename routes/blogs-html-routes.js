@@ -1,6 +1,7 @@
 const db = require("../models");
 const isAuthenticated = require("../config/middleware/isAuthenticated");
 const isBlogOwner = require("../config/middleware/isBlogOwner");
+const Op = require('sequelize').Op;
 
 module.exports = function(app) {
 
@@ -75,10 +76,16 @@ module.exports = function(app) {
 
   // Blog Search by title
   app.get("/blogSearch/:title", function(req, res) {
+    let search = req.params.title;
     console.log(req.params.title)
     db.Blog.findAll({
-      where: {title: req.params.title},
-      include: [db.User, db.Category]
+      include: [db.User, db.Category], 
+      where: {
+        [Op.or]: {
+          title: search,
+          mood: search
+        }
+      }
     }).then(function(blogs) {
       if (blogs === null || blogs.length === 0) {
         res.render("searchresults", {results: "There are no blogs by the name of '" + req.params.title + "' please try again."})
@@ -97,7 +104,9 @@ module.exports = function(app) {
             memberPicture: blog.User.picture
           });
         });
-        res.render("searchresults", {blog: BlogArray})
+        res.render("searchresults", {
+          blog: BlogArray,
+          results: "Showing search results for '" + req.params.title + "'"})
       }
     })
   })

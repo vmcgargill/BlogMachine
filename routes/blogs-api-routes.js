@@ -54,14 +54,22 @@ module.exports = function(app) {
 
   // Get Blog Search Suggestions
   app.get("/api/blogSearchSuggestions", function(req, res) {
-    db.Blog.findAll({}).then(function(blogs) {
+    db.Blog.findAll({
+      include: [db.Category, db.User]
+    }).then(function(blogs) {
+
       let BlogArray = new Array();
       blogs.forEach((blog) => {
         BlogArray.push(blog.title)
+        if (blog.mood !== null) {
+          BlogArray.push(blog.mood)
+        }
       });
-      res.json(BlogArray)
-    })
-  })
+
+      let SearchArray = [...new Set(BlogArray)];
+      res.json(SearchArray);
+    });
+  });
 
   // Post New Blog
   app.post("/api/blogs", isAuthenticated, function(req, res) {
@@ -79,7 +87,7 @@ module.exports = function(app) {
       mood: mood
     }).then(function(data) {
       res.json(data);
-    })
+    });
   });
 
   // Edit Blogs API
@@ -93,9 +101,8 @@ module.exports = function(app) {
         where: {id: req.params.id}
     }).then(function(data) {
       res.json(data)
-    })
-
-  })
+    });
+  });
 
   // Delete Blogs API
   app.delete("/api/blogs/:id", isAuthenticated, isBlogOwner, function(req, res) {
@@ -103,8 +110,7 @@ module.exports = function(app) {
       where: {id: req.params.id}
     }).then(function(data) {
       res.json(data)
-    })
-    // TODO: Add delete blog feature
+    });
   });
   
   // Get blog information by id
