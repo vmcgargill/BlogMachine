@@ -46,12 +46,13 @@ $(document).ready(function() {
       email: email,
       password: password
     }).then(function(data) {
+      console.log(data)
+      if (data.error) {
+        $("#alert .msg").text(data.error);
+        $("#alert").fadeIn(500);
+      } else {
         window.location.replace("/");
-    }).catch(handleLoginErr);
-  }
-
-  function handleLoginErr(err) {
-    $("#alert .msg").text("Error: It looks like something went wrong. Please make sure your account does not already exists and try again.");
-    $("#alert").fadeIn(500);
+      }
+    }).catch(handleErr);
   }
 });

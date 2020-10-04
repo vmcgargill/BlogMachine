@@ -1,3 +1,5 @@
-$("#edit-profile").on("click", function() {
-    window.location.href = "/editprofile";
-})
+$(document).ready(function() {
+    $("#edit-profile").on("click", function() {
+        window.location.href = "/editprofile";
+    });
+});

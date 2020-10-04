@@ -48,9 +48,9 @@ module.exports = function(app) {
       order: [[ db.Blog, "createdAt", "DESC" ]],
     }).then(function(member) {
 
-      let MemberBlogs = new Array();
+      let UserBlogs = new Array();
       member.Blogs.forEach((blog) => {
-        MemberBlogs.push({
+        UserBlogs.push({
           id: blog.id,
           UserId: blog.UserId,
           UserName: member.name,
@@ -62,7 +62,7 @@ module.exports = function(app) {
         });
       });
 
-      let MemberObject = {
+      let UserObject = {
         id: member.id,
         name: member.name,
         email: member.email,
@@ -83,8 +83,8 @@ module.exports = function(app) {
       };
 
       res.render(handlebarTemp, {
-        member: MemberObject,
-        blog: MemberBlogs,
+        member: UserObject,
+        blog: UserBlogs,
         scripts: handlebarScripts
       });
     });

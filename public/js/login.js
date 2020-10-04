@@ -10,22 +10,19 @@ $(document).ready(function() {
     let password = passwordInput.val().trim();
 
     if(password.indexOf(' ') >= 0){
-      $("#alert .msg").text("Error: Password cannot contain any spaces");
-      $("#alert").fadeIn(500);
+      handleErr("Error: Password cannot contain any spaces");
       passwordInput.val("");
       return;
     }
 
     if (password.length < 8) {
-      $("#alert .msg").text("Error: Password length is too short and must be at 8 characters long.");
-      $("#alert").fadeIn(500);
+      handleErr("Error: Password length is too short and must be at 8 characters long.");
       passwordInput.val("");
       return;
     }
 
     if (email === "" || password === "") {
-      $("#alert .msg").text("Error: Name, Email, and Password field cannot be empty.");
-      $("#alert").fadeIn(500);
+      handleErr("Error: Name and Password field cannot be empty.");
       passwordInput.val("");
       return;
     }
@@ -39,13 +36,15 @@ $(document).ready(function() {
     $.post("/api/login", {
       email: email,
       password: password
-    }).then(function() {
+    }).then(function(data) {
+      console.log(data)
       window.location.replace("/");
     }).catch(handleLoginErr);
-  }
 
-  function handleLoginErr() {
-    $("#alert .msg").text("Error: Username or Password is incorrect. Please try again.");
-    $("#alert").fadeIn(500);
+    // Special error handler specifically for login
+    function handleLoginErr() {
+      $("#alert .msg").text("Error: Username or Password is incorrect. Please try again.");
+      $("#alert").fadeIn(500);
+  }
   }
 });

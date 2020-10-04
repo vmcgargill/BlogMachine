@@ -47,28 +47,27 @@ $(document).ready(function() {
         updating = true;
         renderBloginputs(Id)
     }
-
-    function handleLoginErr() {
-        $("#alert .msg").text("Error: It looks like something went wrong. Please try again.");
-        $("#alert").fadeIn(500);
-      }
     
     // Submit blog
     const submitBlog = (event) => {
         event.preventDefault();
         let mood = $("#mood").val();
-        const title = $("#title").val();
-        const body = $("#body").val();
+        const title = $("#title").val().trim();
+        const body = $("#body").val().trim();
         const category = $("#category").val();
 
         if (mood === "Other") {
-            mood = $("#moodInput").val();
+            mood = $("#moodInput").val().trim();
         }
     
-
         if (body.trim() === "" || title.trim() === "") {
-            $("#alert .msg").text("Title and body field cannot be left empty");
-            $("#alert").fadeIn(500);
+            $("#alert .msg").text();
+            handleErr("Title and body field cannot be left empty");
+            return;
+        }
+
+        if (category === null) {
+            handleErr("Please create a category first before posting a blog. Go to Accounts in the navbar then select Categories from the dropdown to create one.");
             return;
         }
 
@@ -83,7 +82,7 @@ $(document).ready(function() {
             $.post("/api/blogs", BlogData).then(function(data) {
                 console.log(data)
                 window.location.href = "/";
-            }).catch(handleLoginErr)
+            }).catch(handleErr)
         } else if (updating === true) {
             $.ajax({
                 method: "PUT",
@@ -91,7 +90,7 @@ $(document).ready(function() {
                 data: BlogData
             }).then(function() {
                 window.location.href = "/blog/" +Id;
-            }).catch(handleLoginErr)
+            }).catch(handleErr)
         }
         
     }

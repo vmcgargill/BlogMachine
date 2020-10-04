@@ -4,14 +4,14 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        len: [0, 50]
+        len: [1, 50]
       }
     },
     body: {
       type: DataTypes.TEXT,
       allowNull: false,
       validate: {
-        len: [0, 100000]
+        len: [1, 100000]
       }
     },
     mood: {

@@ -10,15 +10,21 @@ module.exports = function(app) {
 
   // Post Account API, Signup for Account
   app.post("/api/signup", function(req, res) {
-    db.User.create({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
-      picture: "/default/default.png"
-    }).then(function() {
-        res.redirect(307, "/api/login");
-    }).catch(function(err) {
-        res.status(401).json(err);
+    db.User.findOne({where: {email: req.body.email}}).then(function(user) {
+      if (user === null) {
+        db.User.create({
+          name: req.body.name,
+          email: req.body.email,
+          password: req.body.password,
+          picture: "/default/default.png"
+        }).then(function() {
+            res.redirect(307, "/api/login");
+        }).catch(function(err) {
+            res.status(401).json(err);
+        });
+      } else {
+        res.json({error: "Error: Email '" + req.body.email + "' has already been taken. Please try again."})
+      }
     });
   });
 

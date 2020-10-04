@@ -1,4 +1,3 @@
-
 $(document).ready(function() {
 
     const updateProfile = (event) => {
@@ -17,6 +16,17 @@ $(document).ready(function() {
             formData.append("picture", image.files[0])
         }
 
+        let website = $("#website").val().trim();
+        if (website !== "") {
+            function isUrl(str) {
+                try { new URL(str); } catch (_) { return false; }
+                return true;
+            }
+            if (isUrl(website) === false) {
+                handleErr("Error: The link '" + website + "' is invalid. Please try again.")
+            }
+        }
+
         $.ajax({
             method: "PUT",
             url: "/api/editProfile",
@@ -28,7 +38,7 @@ $(document).ready(function() {
             timeout: 600000
         }).then(function() {
             window.location.href = "/UserProfile";
-        })
+        }).catch(handleErr)
     }
 
     $("#updateprofile").on("submit", updateProfile);
