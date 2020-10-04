@@ -13,4 +13,14 @@ $(document).ready(function(){
             source: data
         });
     });
+
+    $("#SearchBlogBtn").on("click", function() {
+        let SearchBlogInput = $("#SearchBlogInput").val().trim();
+        if (SearchBlogInput === "") {
+            $("#searchAlert").fadeIn(500);
+            $("#searchAlert .msg").text("Error: Search field is empty");
+        } else {
+            window.location.href = "/blogSearch/" + SearchBlogInput
+        }
+    });
 });

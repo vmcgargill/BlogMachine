@@ -40,7 +40,7 @@ module.exports = function(app) {
     });
   });
 
-  // View Blog Page
+  // View Blog Detail Page
   app.get("/blog/:id", function(req, res) {
     db.Blog.findOne({
       where: {id: req.params.id},
@@ -70,6 +70,35 @@ module.exports = function(app) {
         blog: BlogObject,
         scripts: handlbarScripts
       });
+    })
+  })
+
+  // Blog Search by title
+  app.get("/blogSearch/:title", function(req, res) {
+    console.log(req.params.title)
+    db.Blog.findAll({
+      where: {title: req.params.title},
+      include: [db.User, db.Category]
+    }).then(function(blogs) {
+      if (blogs === null || blogs.length === 0) {
+        res.render("searchresults", {results: "There are no blogs by the name of '" + req.params.title + "' please try again."})
+      } else {
+        // Create array for all the blog objects
+        let BlogArray = new Array();
+        blogs.forEach((blog) => {
+          BlogArray.push({
+            id: blog.id,
+            title: blog.title,
+            body: blog.body,
+            UserId: blog.UserId,
+            UserName: blog.User.name,
+            mood: blog.mood,
+            category: blog.Category.name,
+            memberPicture: blog.User.picture
+          });
+        });
+        res.render("searchresults", {blog: BlogArray})
+      }
     })
   })
   

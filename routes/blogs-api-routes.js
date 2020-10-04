@@ -63,11 +63,6 @@ module.exports = function(app) {
     })
   })
 
-  // Get Blog Search by title
-  app.get("/api/blogSearch", function(req, res) {
-    // TODO
-  })
-
   // Post New Blog
   app.post("/api/blogs", isAuthenticated, function(req, res) {
 
@@ -117,15 +112,14 @@ module.exports = function(app) {
     db.Blog.findOne({
       where: {Id: req.params.id}
     }).then(function(data) {
-    let blog = {
-      id: data.id,
-      CategoryId: data.CategoryId,
-      body: data.body,
-      title: data.title,
-      mood: data.mood
-    }
-    res.json(blog)
-  })
-    
-  })
+      let blog = {
+        id: data.id,
+        CategoryId: data.CategoryId,
+        body: data.body,
+        title: data.title,
+        mood: data.mood
+      }
+      res.json(blog)
+    });
+  });
 };
