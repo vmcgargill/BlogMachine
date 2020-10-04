@@ -178,10 +178,22 @@ input.new-item:focus {
 
 @media screen and (max-width: 966px) {
   .navbar {
-    /* height: 300px; */
     padding: 50px;
   }
   .navbar-brand, .nav-link {
     font-size: 12px;
+  }
+  a.blogBody {
+    width: 250px;
+  }
+}
+
+@media screen and (max-width: 645px) {
+  .navbar {
+    height: 200px;
+  }
+
+  #SearchBlogInput {
+    width: 100%;
   }
 }
