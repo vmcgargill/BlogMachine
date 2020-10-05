@@ -111,11 +111,10 @@ module.exports = function(app) {
 
   // Edit User Profile
   app.get("/deleteProfile", isAuthenticated, function(req, res) {
-    // TODO: Add delete profile feature.
-    // - Make sure user making request is owner of the account. This can be done by checking the req.url and seeing what user_id it's on.
-    // - Make it so that the user has to enter their own password
-    console.log(req.url)
-    res.render("users/editprofile", {scripts: '/js/users/editprofile.js'});
+    db.User.findOne({where: {id: req.user.id}}).then(function(user) {
+      let email = user.email;
+      res.render("users/deleteprofile", {scripts: '/js/users/deleteprofile.js', email: email});
+    })
   });
 
 };

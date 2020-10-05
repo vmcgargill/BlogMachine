@@ -3,7 +3,8 @@ const db = require("../models");
 const isAuthenticated = require("../config/middleware/isAuthenticated");
 const fs = require('fs');
 const path = require("path");
-const upload = require("../config/multer")
+const upload = require("../config/multer");
+const passport = require("passport");
 
 module.exports = function(app) {
 
@@ -64,8 +65,15 @@ module.exports = function(app) {
   });
 
   // Delete Account API
-  app.delete("/api/deleteProfile", isAuthenticated, function(req, res) {
-    // TODO: Add delete account feature
-  })
+  app.delete("/api/deleteProfile", passport.authenticate("local"), function(req, res) {
+    console.log(".......................................................................")
+    if (req.user) {
+      db.User.destroy({where: {id: req.user.id}}).then(function() {
+        res.json({success: "Username or password is incorrect. Pleas try again."})
+      });
+    } else {
+      res.json({error: "Username or password is incorrect. Pleas try again."})
+    }
+  });
 
 };

@@ -1,5 +1,11 @@
-Are you sure? This will be permanent. Please enter your password to confirm deleting your profile.
+<h2>Are you sure you want to delete your profile? This will be permanent. All of your blogs will be deleted.</h2> 
 
-<input type="password" id="userPassword">
+
+<form id="DeleteProfileForm">
+    <label for="password-input">Please enter your password to confirm deleting your profile for the account under email: 
+    <div id="user-email" value="{{email}}">{{email}}</div></label><br>
+    <input class="form-control" type="password" id="password-input" placeholder="Password"><br>
+    <input id="delete-profile" class="btn btn-success submit" value="Delete Profile" id="{{email}}">
+</form>
 
 {{> error}}

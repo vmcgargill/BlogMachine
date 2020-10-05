@@ -25,6 +25,8 @@ module.exports = function(sequelize, DataTypes) {
 
   Blog.associate = function(models) {
     Blog.belongsTo(models.User, {
+      onDelete: "CASCADE"
+    }, {
       foreignKey: {
         allowNull: false
       }
