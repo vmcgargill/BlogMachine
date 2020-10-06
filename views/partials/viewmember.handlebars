@@ -1,14 +1,24 @@
-<h1>Member Profile</h1>
+<div class="row">
+    <div class="col">
+      <div class="card">
+        <img src="{{ member.picture }}" alt="User Picture" class="center">
+        <div class="card-body">
+            <h2 class="card-title">{{ member.name }}</h2>
+            <p class="card-text">Title: {{ member.title }}</p>
+            <p class="card-text">Bio: {{ member.bio }}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Hobbies: {{ member.hobbies }}</li>
+            <li class="list-group-item">Interests: {{ member.interests }}</li>
+            <li class="list-group-item">Email: <a href="mailto:{{ member.website }}">{{ member.email }}</a></li>
+            <li class="list-group-item">Website: <a href="{{ member.website }}" target="_blank">{{ member.website }}</a> </li>
+        </ul>
+      </div>
+    </div>
+</div><br>
 
-<img src="{{ member.picture }}" alt="Profile Picture" width="250"> <br><br>
-
-Name: {{ member.name }} <br>
-Email: {{ member.email }} <br>
-Title: {{ member.title }} <br>
-Bio: {{ member.bio }} <br>
-Hobbies: {{ member.hobbies }} <br>
-Interests: {{ member.interests }} <br>
-Website: <a href="{{ member.website }}" target="_blank">{{ member.website }}</a> <br>
+<h2>Blogs:</h2>
 
 <div id="UserBlogs">{{> filterblogs}}</div>
+
 {{> error}}

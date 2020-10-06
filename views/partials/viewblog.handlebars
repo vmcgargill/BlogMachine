@@ -1,5 +1,18 @@
-Title: {{ blog.title }}<br>
-Body: {{ blog.body }}<br>
-Author: <a href="/member/{{ blog.UserId }}">{{ blog.UserName }}</a> <img src="{{ blog.memberPicture }}" alt="Profile Picture" width="100"> <br>
-Mood: {{ blog.mood }}<br>
-Category: {{ blog.category }}
+<div class="row">
+  <div id="NoBlogs"></div>
+  <div class="col" id="BlogList">
+      <div class="card blogSearch">
+        <div class="card-body">
+          <h2 class="card-title"><a>{{ blog.title }}</a></h2>
+          <a href="/member/{{ blog.UserId }}">{{ blog.UserName }}</a>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Category: <a>{{ blog.category }}</a></li>
+          <li class="list-group-item">Mood: <a>{{ blog.mood }}</a></li>
+        </ul>
+        <div class="card-body">
+          <p class="card-text">{{ blog.body }}</p>
+        </div>
+      </div>
+  </div>
+</div><br>
