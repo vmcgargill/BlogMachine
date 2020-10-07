@@ -73,7 +73,7 @@ module.exports = function(app) {
       };
 
       let handlebarTemp = "users/memberprofile";
-      let handlebarScripts = "/js/users/viewmember.js";
+      let handlebarScripts = "/js/users/memberprofile.js";
 
       if (req.user && req.user.id === member.id) {
         handlebarTemp = "users/userprofile";
