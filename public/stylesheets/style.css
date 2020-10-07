@@ -32,7 +32,6 @@ form.login {
   font-size: 28px;
 }
 
-/*Overriding the a properties*/
 .navbar-brand:hover {
   color: white;
 }
@@ -51,14 +50,12 @@ button:hover, .btn:hover {
   background-color: rgb(21, 28, 48);
 }
 
-/* search bar / selection */
 input, #SearchBlogInput, select {
   border-style: solid;
   border-radius: 3px;
   border-color: rgb(43, 80, 87);
 }
 
-/* Specifies buttons only */
 button, #SearchBlogBtn, .btn {
   background-color: rgb(74, 158, 151);
   border-style: solid;
@@ -124,7 +121,7 @@ body {
   border-color: rgb(43, 80, 87);
   border: 6px;
   padding: 40px;
-  margin-bottom: 5%; /*May or may not stay*/
+  margin-bottom: 5%;
 }
  
 .container h2, .container h4 {
@@ -135,7 +132,6 @@ body {
   margin-top: 20px;
 }
 
-/* Aligns sign up / login page to center */
 .row {
   justify-content: center;
 }

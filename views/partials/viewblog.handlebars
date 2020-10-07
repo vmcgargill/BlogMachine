@@ -1,3 +1,4 @@
+{{!-- This partial is used for viewing a full blog and can be used as a partial in the userblog.handlebar if the signed in user is blog owner --}}
 <div class="row">
   <div id="NoBlogs"></div>
   <div class="col" id="BlogList">
@@ -8,7 +9,7 @@
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">Category: <a>{{ blog.category }}</a></li>
-          <li class="list-group-item">Mood: <a>{{ blog.mood }}</a></li>
+          <li class="list-group-item">Mood: <a id="BlogMood">{{ blog.mood }}</a></li>
         </ul>
         <div class="card-body">
           <pre class="card-text">{{ blog.body }}</pre>

@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		{{!-- Header Partial --}}
 		{{> header}}
 	</head>
 	<body>
 
-	{{> navbar}}
+		{{!-- Navbar Partial --}}
+		{{> navbar}}
 
 	<div class="container">
 		{{{ body }}}
 	</div>
 
+	{{!-- Footer Partial --}}
 	{{> footer}}
 
 	</body>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script src="/js/error.js"></script>
+		<script src="/js/error.js"></script>
     <script src="/js/nav.js"></script>
 	<script src="{{ scripts }}"></script>
 </html>

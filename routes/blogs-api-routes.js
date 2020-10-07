@@ -4,16 +4,16 @@ const isBlogOwner = require("../config/middleware/isBlogOwner");
 
 module.exports = function(app) {
 
-    // Get All Blogs & Render Handlebar Templates
+  // Get All Blogs & Render Handlebar Templates
   app.get("/api/blogs", function(req, res) {
     let query = {};
     let limit;
     let order;
-    
+
     if (req.query.order) {
-      order = [[ "createdAt", req.query.order ]]
+      order = [[ "createdAt", req.query.order ]];
     }
-    
+
     if (req.query.user_id) {
       query.UserId = req.query.user_id;
     }
@@ -34,6 +34,7 @@ module.exports = function(app) {
     }).then(function(blogs) {
 
       // Create array for all the blog objects
+      // This is necessary because express handlebars can't read raw data
       let BlogArray = new Array();
       blogs.forEach((blog) => {
         BlogArray.push({
@@ -60,9 +61,9 @@ module.exports = function(app) {
 
       let BlogArray = new Array();
       blogs.forEach((blog) => {
-        BlogArray.push(blog.title)
+        BlogArray.push(blog.title);
         if (blog.mood !== null) {
-          BlogArray.push(blog.mood)
+          BlogArray.push(blog.mood);
         }
       });
 
@@ -78,7 +79,7 @@ module.exports = function(app) {
     if (mood === "None") {
       mood = null;
     }
-    
+
     db.Blog.create({
       title: req.body.title,
       body: req.body.body,
@@ -91,16 +92,17 @@ module.exports = function(app) {
   });
 
   // Edit Blogs API
+  // Edit and Delete blogs utilize the isBlogOwner middleware to make sure that the user editing/deleting is the blog owner
   app.put("/api/blogs/:id", isAuthenticated, isBlogOwner, function(req, res) {
     db.Blog.update({
-        title: req.body.title,
-        CategoryId: req.body.category,
-        body: req.body.body,
-        mood: req.body.mood
-      }, {
-        where: {id: req.params.id}
+      title: req.body.title,
+      CategoryId: req.body.category,
+      body: req.body.body,
+      mood: req.body.mood
+    }, {
+      where: {id: req.params.id}
     }).then(function(data) {
-      res.json(data)
+      res.json(data);
     });
   });
 
@@ -109,12 +111,13 @@ module.exports = function(app) {
     db.Blog.destroy({
       where: {id: req.params.id}
     }).then(function(data) {
-      res.json(data)
+      res.json(data);
     });
   });
-  
+
   // Get blog information by id
-  app.get("/api/blogs/:id", isAuthenticated, function(req, res) {
+  // This API is specifically used for editing a blog in postblog.js, so the must be authinticated and signed in as the blog owner
+  app.get("/api/blogs/:id", isAuthenticated, isBlogOwner, function(req, res) {
     db.Blog.findOne({
       where: {Id: req.params.id}
     }).then(function(data) {
@@ -124,8 +127,8 @@ module.exports = function(app) {
         body: data.body,
         title: data.title,
         mood: data.mood
-      }
-      res.json(blog)
+      };
+      res.json(blog);
     });
   });
 };

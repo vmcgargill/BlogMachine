@@ -4,7 +4,7 @@ const isAuthenticated = require("../config/middleware/isAuthenticated");
 
 module.exports = function(app) {
 
-    // View All Members Page
+  // View All Members Page
   app.get("/members", function(req, res) {
     db.User.findAll({}).then(function(users) {
       const UserArray = new Array();
@@ -18,13 +18,13 @@ module.exports = function(app) {
           hobbies: user.hobbies,
           interests: user.interests,
           title: user.title
-        })
+        });
       });
       res.render("users/members", {
-        scripts: '/js/users/members.js',
+        scripts: "/js/users/members.js",
         user: UserArray
       });
-    })
+    });
   });
 
   // Get Sign In User Profile
@@ -36,9 +36,7 @@ module.exports = function(app) {
 
   // View User Profile
   app.get("/member/:id", function(req, res) {
-    db.User.findOne({ 
-        where: { id: req.params.id
-      },
+    db.User.findOne({where: { id: req.params.id},
       include: {
         model: db.Blog,
         include: {
@@ -79,8 +77,8 @@ module.exports = function(app) {
 
       if (req.user && req.user.id === member.id) {
         handlebarTemp = "users/userprofile";
-        handlebarScripts = "/js/users/userprofile.js"
-      };
+        handlebarScripts = "/js/users/userprofile.js";
+      }
 
       res.render(handlebarTemp, {
         member: UserObject,
@@ -92,6 +90,7 @@ module.exports = function(app) {
 
   // Edit User Profile
   app.get("/editProfile", isAuthenticated, function(req, res) {
+    // There is no need for middleware that checks if user is account owner because req.user.id tells us which user is signed in and taking these actions
     db.User.findOne({ where: {id: req.user.id}}).then(function(user) {
       let UserObject = {
         name: user.name,
@@ -101,20 +100,20 @@ module.exports = function(app) {
         hobbies: user.hobbies,
         interests: user.interests,
         website: user.website
-      }
+      };
       res.render("users/editprofile", {
-        scripts: '/js/users/editprofile.js',
+        scripts: "/js/users/editprofile.js",
         user: UserObject
       });
-    })
+    });
   });
 
-  // Edit User Profile
+  // Delete User Profile
   app.get("/deleteProfile", isAuthenticated, function(req, res) {
     db.User.findOne({where: {id: req.user.id}}).then(function(user) {
       let email = user.email;
-      res.render("users/deleteprofile", {scripts: '/js/users/deleteprofile.js', email: email});
-    })
+      res.render("users/deleteprofile", {scripts: "/js/users/deleteprofile.js", email: email});
+    });
   });
 
 };

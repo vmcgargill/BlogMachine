@@ -1,5 +1,6 @@
 <h1>View All Blogs</h1><br>
 
+{{!-- Author Filter --}}
 <label for="users">Filter by Author</label><br>
 <select name="users" id="users" class="DropDowns">
     <option value="AllUsers">All Users</option>
@@ -8,6 +9,7 @@
     {{/each}}
 </select><br><br>
 
+{{!-- Category Filter --}}
 <label for="categories">Filter by Category</label><br>
 <select name="categories" id="categories" class="DropDowns">
     <option value="AllCategories">All Categories</option>
@@ -16,14 +18,18 @@
     {{/each}}
 </select><br><br>
 
+{{!-- Age Filter --}}
 <label for="age">Filter by Newest or Oldest</label><br>
 <select name="age" id="age" class="DropDowns">
     <option value="newest">Newest First</option>
     <option value="oldest">Oldest First</option>
 </select><br><br>
 
+{{!-- Search Blogs By Key Word Filter --}}
 <input type="text", id="SearchFilteresBlogs" placeholder="Search Filtered List"><br><br>
 
+{{!-- Error Partial --}}
 {{> error}}
 
+{{!-- Display Blogs Div --}}
 <div id="FilterBlogs"></div>
