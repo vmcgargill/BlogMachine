@@ -72,7 +72,7 @@ module.exports = function(app) {
         interests: member.interests
       };
 
-      let handlebarTemp = "partials/viewmember";
+      let handlebarTemp = "users/memberprofile";
       let handlebarScripts = "/js/users/viewmember.js";
 
       if (req.user && req.user.id === member.id) {

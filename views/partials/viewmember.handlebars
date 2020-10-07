@@ -1,4 +1,5 @@
-{{!-- This partial is used for viewing a member profile and can be used as a partial in the userprofile.handlebar if the signed in user is profile owner --}}
+{{!-- This partial is used for viewing a member profile and can be used as a partial in the userprofile.handlebar file if the signed in user is profile owner 
+or the memberprofile.handlebars file if the user is not the owner of the profile.--}}
 {{!-- Display Member Profile Details --}}
 <div class="row">
     <div class="col">
@@ -18,7 +19,3 @@
       </div>
     </div>
 </div><br>
-
-{{!-- Display Member Blogs --}}
-<h2>Blogs:</h2>
-<div id="UserBlogs">{{> filterblogs}}</div>
