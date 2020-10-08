@@ -85,8 +85,8 @@ $(document).ready(function () {
     };
 
     if (updating === false) {
-      $.post("/api/blogs", BlogData).then(function () {
-        window.location.href = "/";
+      $.post("/api/blogs", BlogData).then(function (data) {
+        window.location.href = "/blog/" + data.id;
       }).catch(handleErr);
     } else if (updating === true) {
       $.ajax({
