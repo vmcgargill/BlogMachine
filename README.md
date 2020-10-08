@@ -1,19 +1,118 @@
 # BlogMachine
 
-An ap where users can sign into their account and make blog posts.
-
 Heroku Live Link: https://blog-machine.herokuapp.com/
 
-To get started, first install dependencies:
+[![License: NPM](https://img.shields.io/badge/License-NPM%20Package-green.svg)](https://www.npmjs.com/)
+ 
+ ## Description
+
+A social media app that lets user create accounts, log in, and post blogs. It also lets users view other member's profiles and other member's blogs, search for blogs, and even filter blogs.
+
+BlogMachine demo gif:
+
+![BlogMachine](./BlogMachine.gif)
+ 
+# Table of Contents 
+- [Installation](#installation) 
+- [Usage](#usage) 
+- [Contributors](#contributors) 
+- [Tests](#tests)
+- [Layers](#layers)
+  - [Database](#database)
+  - [Config](#config)
+  - [Models](#models)
+  - [Public](#public)
+- [License](#license) 
+- [Questions](#questions) 
+
+## Installation
+
+The BlogMachine app includes the following dependencies: bcryptjs, express, express-handlebars, express-session, multer, mysql2, passport, passport-local, sequelize, and sequelize-cli. It also utlizes eslint and Travis CI for the tests and for indentation, quotation, and other miscellaneous errors.
+
+To install dependencies, run the following command:
 
 ```
 npm i
 ```
 
-Then query the [scheema.sql file](./scheema.sql) in MySQL workbench or in the MySQL Shell.
+## Usage
 
-Then you should be able to deploy locally by running:
+You may use this app live on [Heroku deployed app](https://blog-machine.herokuapp.com/).
+
+To run the app locally, first query the [scheema.sql file](./scheema.sql) in MySQL workbench or in the MySQL Shell to create the blog-machine database. 
+
+Then install dependencies seen in [Installation](#installation). 
+
+Then run the following command:
 
 ```
 npm start
 ```
+
+## License 
+This application is covered by: NPM Package
+ 
+## Contributors 
+[Vincent McGargill](https://github.com/vmcgargill)
+[Athena Petrovich](https://github.com/strawberryboar)
+[Maynard Peralta](https://github.com/maynperalta)
+ 
+## Tests 
+```
+npm test
+```
+
+## Layers
+
+This project is done in a MVC style design. It has 5 layers: database, models, config, routes, and public/views.
+
+### Database
+
+The database layers holds the database itself, which stores all of the root information of all 3 tables: users, blogs, and categories. The application accesses and modifies this information by using the sequelize ORM. Most of the queries can be seen in the routes layer when the front end makes an API call. The database layer is very basic and is unseen by the user's eyes as it serves one soul purpose: to store information. Some of this information should also not be seen by the public's eye regardless, such as the hashed version of each user password. 
+
+### Config
+
+The config layer holds all of the middleware that is used in the routes layer. It includes the local database configuration in config.json for testing purposes. It also holds the multer.js middleware which is used for uploading Folders. There is also passport.js which is used for authenticating users accounts for when they sign in. There is also the isAuthenticated middleware which veries if the user is signed in or authenticated. The isAuthenticated middleware is used for HTML pages and API calls that are meant to be used only by users who are logged into an account. If the user is not logged in, then they are redirected to the login page. Finally, there is the isBlogOwner middleware which is specifically used for verifying if a user is the owner of a blog when they are trying to modifiy and delete a blog. The isBlogOwner middleware is a security protocal to make sure no one hacks the website from the front end and updates or deletes another users blog. Otherwise, without this user verifying middleware that checks if the user making these changes is the blog owner, any user could go into the source code in their browser by using inspect element and make changes or event delete a blog that is not their own. You can see this used specifically in the routes layer for updating and deleting blog API calls.
+
+### Models
+
+The models layer contains all of the bluprints for the MySQL database tables used in this app. First off we have the user table which contains the following rows: email, password, name, picture, title, bio, website, hobbies, and interests. The email and password are specifically used for signing into the website and authenticating an account. The email can also be used as a point of contact information for the owner of the profile as it will display on their profile. The name is the display name that the user chooses, this may be their real name. The title can be whatever title the user choses for themselves or for their profile, for example a job title or occupation can be a title. The bio is the user's personal biography that they wish to share with other users. The picture is a path link to the user's profile picture that they uploaded. The website is a link to their very own website, a portfolio website would be an example. The hobbies and interests are another optional bit of details that the user may share on the website. All of the datatypes listed in the user table are all strings. Finally, there is also the user ID which is automatically generated by sequelize, and it is used to identify the user, but also used as a foreign key in the blogs table to identify which user posted the blog or which user is allowed to make updates or delete the blog. We can see associations made in the Models layer between blogs and the users AKA the creators of the blogs. Each plog has one user who created it. Each user may have many blogs that they have created, and if a user is deleted then all of the blogs they posted on their account will be deleted or cascaded. A potential added feature for this site would be to add the ability to make certain users site administratiors who can do special things such as edit or delete other user's blogs, or even edit/delete other user profiles to help police the site incase a user goes rogue and does bad things or makes inappropriate posts on the website. Another potential feature wold be to ban users from the website.
+
+The blog table has 3 rows: the title, the body, and the mood which are all string or text datatypes. The title and the body are pretty self explanitory, they are the title of the blog and the whole body of text of the blog. Then there is the mood row which is a string that the user may select or create themselves which is a description of the mood of the blog or the current mood of the user posting the blog. The blog table also has 2 required foreign keys: the UserId and the CategoryId. The UserId identifies which user posted the blog as explained previously. The CategoryId is the id that identifies which category was selected for the blog. Categories can be created by any user in the category section of the project. Categories are protected: in other words a user cannot delete a category if it already has one or more blog assigned to it. This is intentional to prevent people from deleting blogs made by other users by deleting a specific category. 
+
+Finally, there is the category table which only has 1 row: the name of the category. There is also the ID of the category which is used to identify the slected category and also used to identify a blog category as a foreign key in the blog table. This table is the simplest table in the database. It also has an association with Blogs as it is allowed to have many blogs in the same category. A potential added feature would be to make it so only site administators could create or delete categories. We could also add the feature to edit categories, but for the class assignment this seemed unnecessary because you already have the ability to create and delete categories.
+
+### Routes
+
+The routes layer is the layer where all of the interactions with the front end and backend are made. The routes layer uses middleware configurations from the config layer, database queries from the models layer using the sequelize ORM, and it defines both HTML routes and API routes that are all used on the front end layer. There are 8 types of routes all seperated in their own files: general API routes, general HTML routes, blog API routes, blog HTML routes, categories API routes, categories HTML routes, user API routes, and finally user HTML routes.
+
+The genral API routes are located in the api-routes.js file and they include the login API route, the signup API route, and the logout API route. These API calls are used in the front in for users logging into their accounts, logging out of their accounts, and signing up for a new account. The general HTML routes which is located in the html-routes.js file is essentially the same thing except for it serves/renders HTML handlebar pages and javascript pages to the user when they visit the home page, the login page, or the signup page using those URL paths in the web browser.
+
+The blogs API routes and the blogs HTML routes are also paired together. The blog API routes located in the blogs-api-routes.js file include all of the blog API calls that are related to getting blog information. There is a general blog API call that accepts filtered queries for a list of blogs and returns and renders a list of those blogs in a neat HTML template using handlebars. There is also an API call for loading blog search suggestions, for creating blogs, updating blogs, deleting blogs, and viewing a specific blog's details which is user specifically for editing blogs in the postblog.js file in the public layer. As you can see, some of these API calls are protected and use the isAuthenticated and isBlogOwner middleware. The blog HTML routes include the blog page which includes the blog filter, the viewblog page which shows the user a specific blog in full detail with the full description. It also has the blog search results page which shows the user their results when they search for a blog, the post blog page, and then the edit blog page.
+
+The categories API routes and categories HTML routes are paired together and they can be found respectively in the categories-api-routes.js file and the categories-html-routes.js file. This part of the routes layer is much simpler because there is only 1 HTML route and 2 API routes. The HTML route is the route for the viewcategories page where users can create new categories and delete unused categories. The API categories routes include a post category route and a delete category route. They are pretty self explanatory.
+
+The user API routes and HTML routes can be found in the users-api-routes.js file and the users-html-routes.js file. The API routes seen in this section of the routes include routes to edit a user profile and delete a user profile. This is where we can see the multer.js middleware being used to upload profile pictures from the config layer. There was no need for middleware for checking if the user is the owner of the profile as we can see who is making this request. However, if we wanted to implement a system where we can have site administrators edit or delete another user's profile for site regulation, then we shoulf probably modify these API routes or create entirely new routes that are special for site administrators, along with creating some new middleware. The user HTML routes include the members page which displays all members on the site, the UserProfile page which just checks the user that is signed in and redirects them to their own profile, the view profile route which is used to view a member's profile by their Id, the edit profile page, and the delete profile page. Again, if we were to add a site admin feature we would have to edit some of these routes, or create new routes with new middleware for checking if the user is a website admin.
+
+### Public
+
+The public layer includes the views directory and the public directory. The public direcory is a static directory, meaning Express makes it avilable to view for the public in the webbrowser. It is mostly made up with JavaScript and jQuery button click events, AJAX API calls, dropdown swtch event listeners, and form submit event listeners. These listeners are what makes the website responsive to the user so they can interact with the website, view blogs, post blogs, edit blogs, delete blogs, make changes to their profile, create a profile, delete a profile, create categories, and delete categores. In the public directory you can see 3 sub directories: default, js, stlesheets, and uplaod. The default directory will hold the default profile picture for when a user signs up for an account and has not uploaded a picture yet. The upload directory will contain all uploaded profile pictures for the website. When a user uploads a new peofile picture, it will apear here and can be accessed here by the HTML pages. If a user uploads a new peofile picture, the olf profile picture will be removed or deleted here if it is not the default picture. The default picture is in it's own directory to protect it. The js directory holds all of the JavaScript files and is organized in 3 sub directories: blogs, categories, and users. There is also the JavaScript in the root js directory for the error function, the home page, the login page, the signup page, and the navbar stuff.
+
+The views direcory will hold of the HTML Express Handlebars files. It is also organized into sub-directories: blogs, layouts, partials, and users. In the root of the views directory we can also see general pages such as the viewcategory page, the signup page, login page, search results page, and the home page. The blogs directory includes the handlbar layouts for the blogs filter page, the post blog page, and the userblog page which will have the viewblog partial and include a edit blog button and delete blog button. There is also the users directory which includes the deleteprofile layout, edit profile, the members page which displays all site members, member profile, and user profile. Member profile is specifically used for when one user is viewing another user's profile. The userprofile page is used for when a user is viewing their own prfile that they are signed into as it also includes a edit profilr button and delete profile button. Both of these pages use the viewmember partial. Originally it was desgned for the view member partial to be used as the memberprofile page, but this was later modified so that the edit profile and delete profile buttons could be displayed under the profile details and above the list of user blogs. 
+
+Then their is the layouts directory which includes the main handlebars page. The layout directory is the primary express handlepar layout that is used for all HTML pages in all routes. It includes the header, footer, the navbars, and the javascript includes. All of the content is put inside the body brackets . The purpose of this is so all pages have the same header, footer, navbar, and they also include different javascript files. We have modified it so that based on what HTML route is being called, it renders a specific JavaScript script for that file. Of course the navbar, header, and footer are not actually located in this main.handlebars file, they are actually located in express handlebars patials to keep the handlebar layour mor organized. The purpose of this is so that you don't have to sort through a bunch of HTML code to find the navbars and make modifications to it. All you have to do is locate the navbar.handlebars file and that file includes the entire navbar. Then you only have to make modifications to that handlebar file if you want to add or remove a feature.
+
+As mentioned previously, this app utilizes express handlbars partials. Express handlebars has a feature where in the partials directory, you can create basic HTML tmplates that can be used and imported into other handlebars files. This is essential for making your HTML for fluent, concise, and less repetitive. That way we can store the generic guts of most of our HTML in the partials directory so it can be used in other handlebar files multiple times. In the partials directory for example, you may see a file called error.handlebars. This file contains a very basic HTML template for an error message that is used on several other handlebar files. You can see it being used in the following fashion:
+
+```
+{{> error}}
+```
+
+All you have to do is include the handlbar partial name in curly brackets with an outward facing carrot to let handlbars know to include this partial located in the partial directory. We can see the viewblog partial in this directory which can be used alone for the viewblog feature for any user or it can be seen used in the userblog page as a partial so if the user is signed in and is the profile owner it will display the edit profile and delete profile buttons. That way only profile owners can see the edit profile and delete profile buttons. These feature is also used with the viewmember partial as mentioned before it is used both in the userprofile handlebar and memberprofile handlebar. The only difference is the userprofile will also display an edit profile and delete profile button. The partials directory also has the filterblogs partial which is a generic HTML layout for a list of blogs on a page, and again this partial is used to display lists of blogs on several different pages pages including blogs, home, userprofile, and memberprofile. The soul purpose of the filterblogs partial is to display a list of several blogs while limiting the amount of body displayed on the screen. The filterblogs hides the body so that it does not take up the entire screen for long blog posts, and it still includes that text so when a user does a local search query on the blogs filter pager, they can search for keywords in the body as well as the title, mood, category, or user. The partials directory also has the header, navbar, and footer partials which are only used in the main.handlebars file, but this is done so the code is more organized and easier to read in the main handlebars. It's not entirly necessary to do this because you could just include that all in the main.handlebars file since that file is the only one that uses those partials, but it is a best practice to do so to keep the code more organized and easier to read.  
+
+## Questions 
+If you have any questions feel free to contact:
+ 
+[GitHub](https://github.com/vmcgargill) 
+ 
+Email: [vincentmcgargill@gmail.com](mailto:vincentmcgargill@gmail.com)
