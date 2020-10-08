@@ -21,6 +21,7 @@ BlogMachine demo gif:
   - [Database](#database)
   - [Config](#config)
   - [Models](#models)
+  - [Routes](#routes)
   - [Public](#public)
 - [License](#license) 
 - [Questions](#questions) 
