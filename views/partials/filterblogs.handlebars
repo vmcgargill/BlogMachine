@@ -1,28 +1,22 @@
-{{!-- <ul id="BlogList">
-  {{#each blog }}
-    <li class='list-group-item blog-item'>
-      <a href="/blog/{{ id }}" class="blogTitle">{{title}}</a><br>
-      <a class="blogBody">{{ body }}</a>
-      Author: <a href="/member/{{ UserId }}">{{ UserName }}</a><img src="{{ memberPicture }}" alt="Profile Picture" width="100"><br> 
-      Category: <a>{{ category }}</a><br>
-      <a>Mood: {{ mood }}</a></li>
-  {{/each}}
-</ul> --}}
-
-{{#each blog }}
-  <div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="{{ memberPicture }}" alt="Card image cap">
-    <div class="card-body">
-      <h5 class="card-title">{{title}}</h5>
-      <p class="blogBody card-text">{{ body }}</p>
-    </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">Category: {{ category }}</li>
-      <li class="list-group-item">Mood: {{ mood }}</li>
-    </ul>
-    <div class="card-body">
-      <a href="/blog/{{ id }}" class="card-link">View Blog</a>
-      <a href="/member/{{ UserId }}" class="card-link">View Author</a>
-    </div>
+{{!-- This filter blog partial is used for all blog lists --}}
+<div class="row">
+  <div id="NoBlogs"></div>
+  <div class="col" id="BlogList">
+    {{#each blog }}
+      <div class="card blogSearch">
+        <div class="card-body">
+          <h5 class="card-title"><a>{{title}}</a></h5>
+          <p class="card-text"><a class="blogBody">{{ body }}</a></p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Category: <a>{{ category }}</a></li>
+          <li class="list-group-item">Mood: <a>{{ mood }}</a></li>
+        </ul>
+        <div class="card-body">
+          <a href="/blog/{{ id }}" class="card-link">View Blog</a>
+          <a href="/member/{{ UserId }}" class="card-link">Author: {{UserName}}</a>
+        </div>
+      </div>
+    {{/each}}
   </div>
-{{/each}}
+</div>

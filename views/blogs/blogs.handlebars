@@ -1,30 +1,35 @@
 <h1>View All Blogs</h1><br>
 
-<label for="users">Filter by Author</label>
+{{!-- Author Filter --}}
+<label for="users">Filter by Author</label><br>
 <select name="users" id="users" class="DropDowns">
     <option value="AllUsers">All Users</option>
     {{#each user }}
     <option value="{{id}}">{{name}}</option>
     {{/each}}
-</select><br>
+</select><br><br>
 
-<label for="categories">Filter by Category</label>
+{{!-- Category Filter --}}
+<label for="categories">Filter by Category</label><br>
 <select name="categories" id="categories" class="DropDowns">
     <option value="AllCategories">All Categories</option>
     {{#each category }}
     <option value="{{id}}">{{name}}</option>
     {{/each}}
-</select><br>
+</select><br><br>
 
-<label for="age">Filter by Newest or Oldest</label>
+{{!-- Age Filter --}}
+<label for="age">Filter by Newest or Oldest</label><br>
 <select name="age" id="age" class="DropDowns">
     <option value="newest">Newest First</option>
     <option value="oldest">Oldest First</option>
-</select><br>
+</select><br><br>
 
+{{!-- Search Blogs By Key Word Filter --}}
 <input type="text", id="SearchFilteresBlogs" placeholder="Search Filtered List"><br><br>
 
-{{!-- TODO: Add error handler in blogs.js --}}
+{{!-- Error Partial --}}
 {{> error}}
 
+{{!-- Display Blogs Div --}}
 <div id="FilterBlogs"></div>

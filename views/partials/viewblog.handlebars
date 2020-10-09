@@ -1,5 +1,19 @@
-Title: {{ blog.title }}<br>
-Body: {{ blog.body }}<br>
-Author: <a href="/member/{{ blog.UserId }}">{{ blog.UserName }}</a> <img src="{{ blog.memberPicture }}" alt="Profile Picture" width="100"> <br>
-Mood: {{ blog.mood }}<br>
-Category: {{ blog.category }}
+{{!-- This partial is used for viewing a full blog and can be used as a partial in the userblog.handlebar if the signed in user is blog owner --}}
+<div class="row">
+  <div id="NoBlogs"></div>
+  <div class="col" id="BlogList">
+      <div class="card blogSearch">
+        <div class="card-body">
+          <h2 class="card-title"><a>{{ blog.title }}</a></h2>
+          <a href="/member/{{ blog.UserId }}">{{ blog.UserName }}</a>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Category: <a>{{ blog.category }}</a></li>
+          <li class="list-group-item">Mood: <a id="BlogMood">{{ blog.mood }}</a></li>
+        </ul>
+        <div class="card-body">
+          <pre class="card-text">{{ blog.body }}</pre>
+        </div>
+      </div>
+  </div>
+</div><br>

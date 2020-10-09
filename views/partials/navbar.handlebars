@@ -1,3 +1,4 @@
+{{!-- Navbar Partial --}}
 <nav class="navbar navbar-expand">
     <a class="navbar-brand" href="/">Blog Machine</a>
     <div class="collapse navbar-collapse" id="navbarText">
@@ -17,8 +18,8 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="/postBlog">Create Blog</a>
-            <a class="dropdown-item" href="/UserProfile">Profile</a>
             <a class="dropdown-item" href="/categories">Categories</a>
+            <a class="dropdown-item" href="/UserProfile">Profile</a>
             <a class="dropdown-item" href="/logout">Logout</a>
             </div>
         </li>
@@ -33,6 +34,12 @@
     <div>
         <input id="SearchBlogInput" placeholder="Search Blogs by Title" type="text">
         <button id="SearchBlogBtn" class="button">Search</button>
-        {{> error}}
+        {{!-- A special alert message specifically used for when there is an error searching for blogs in the SearchBlogInput.
+        We do not use the error partial here because otherwise all error messages on all pages would default 
+        to this alert message instead of the one it is supposed to in the body container.. --}}
+        <div style="display: none" id="searchAlert" class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span> <span class="msg"></span>
+        </div>
     </div>
 </nav>

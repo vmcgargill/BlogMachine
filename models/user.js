@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
+  // Defines the user table with all user information
   const User = sequelize.define("User", {
     email: {
       type: DataTypes.STRING,
@@ -21,6 +22,8 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false
     },
+    // Pictures are locally stored in the public/uploads/ directory instead of stored as a blob on the database.
+    // An additional feature could be to store pictures in database as blob row instead of as string of the file path.
     picture: {
       type: DataTypes.STRING,
       allowNull: true
@@ -62,17 +65,18 @@ module.exports = function(sequelize, DataTypes) {
     }
   });
 
-  User.associate = function(models) {
-    User.hasMany(models.Blog, {
-      onDelete: "cascade"
-    });
+  // Associates users with the many blogs they own
+  User.associate = function (models) {
+    User.hasMany(models.Blog);
   };
 
-  User.prototype.validPassword = function(password) {
+  // Makes sure hashed password can be compared to unhashed password
+  User.prototype.validPassword = function (password) {
     return bcrypt.compareSync(password, this.password);
   };
 
-  User.addHook("beforeCreate", function(user) {
+  // Creates a hook that makes sure password is hashed before added to the database.
+  User.addHook("beforeCreate", function (user) {
     user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
   });
   return User;

@@ -2,7 +2,7 @@ module.exports = function(app) {
 
   // Home Page
   app.get("/", function(req, res) {
-    res.render("home", { scripts: '/js/home.js' });
+    res.render("home", { scripts: "/js/home.js" });
   });
 
   // Login to Site
@@ -10,7 +10,7 @@ module.exports = function(app) {
     if (req.user) {
       res.redirect("/");
     }
-    res.render("login", {scripts: '/js/login.js'});
+    res.render("login", {scripts: "/js/login.js"});
   });
 
   // Sign Up Account
@@ -18,6 +18,6 @@ module.exports = function(app) {
     if (req.user) {
       res.redirect("/");
     }
-    res.render("signup", {scripts: '/js/signup.js'});
+    res.render("signup", {scripts: "/js/signup.js"});
   });
 };

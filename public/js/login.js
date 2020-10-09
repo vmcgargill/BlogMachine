@@ -1,33 +1,47 @@
-$(document).ready(function() {
+$(document).ready(function () {
   var loginForm = $("form.login");
+  // Special Handle Login Error created so that error does not prompt when the user logs in succesfully.
+  // If we user the handleErr function in error.js here it would prompt the error no matter what, even if the user logs in succesfully.
+  // By creating a unique error inside the document ready block, we prevent this problem.
+  function handleLoginErr() {
+    $("#alert .msg").text("Error: Username or Password is incorrect. Please try again.");
+    $("#alert").fadeIn(500);
+  }
   var emailInput = $("input#email-input");
   var passwordInput = $("input#password-input");
 
-  loginForm.on("submit", function(event) {
+  // On submit form event listener that logs in user
+  loginForm.on("submit", function (event) {
     event.preventDefault();
 
     let email = emailInput.val().trim();
     let password = passwordInput.val().trim();
 
-    if(password.indexOf(' ') >= 0){
-      $("#alert .msg").text("Error: Password cannot contain any spaces");
-      $("#alert").fadeIn(500);
+    if (password.indexOf(" ") >= 0) {
+      handleErr("Error: Password cannot contain any spaces");
       passwordInput.val("");
       return;
     }
 
     if (password.length < 8) {
-      $("#alert .msg").text("Error: Password length is too short and must be at 8 characters long.");
-      $("#alert").fadeIn(500);
+      handleErr("Error: Password length is too short and must be at 8 characters long.");
       passwordInput.val("");
       return;
     }
 
     if (email === "" || password === "") {
-      $("#alert .msg").text("Error: Name, Email, and Password field cannot be empty.");
-      $("#alert").fadeIn(500);
+      handleErr("Error: Name and Password field cannot be empty.");
       passwordInput.val("");
       return;
+    }
+
+    function loginUser(email, password) {
+      $.post("/api/login", {
+        email: email,
+        password: password
+      }).then(function () {
+        window.location.replace("/");
+      }).catch(handleLoginErr);
     }
 
     loginUser(email, password);
@@ -35,17 +49,4 @@ $(document).ready(function() {
     passwordInput.val("");
   });
 
-  function loginUser(email, password) {
-    $.post("/api/login", {
-      email: email,
-      password: password
-    }).then(function() {
-      window.location.replace("/");
-    }).catch(handleLoginErr);
-  }
-
-  function handleLoginErr() {
-    $("#alert .msg").text("Error: Username or Password is incorrect. Please try again.");
-    $("#alert").fadeIn(500);
-  }
 });

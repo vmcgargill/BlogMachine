@@ -1,59 +1,59 @@
-const FilterBlogs = $("#FilterBlogs");
-const DropDowns = $(".DropDowns");
+$(document).ready(function () {
+  const FilterBlogs = $("#FilterBlogs");
+  const DropDowns = $(".DropDowns");
 
-$.get("/api/blogs/?&order=DESC").then(function(data) {
-    FilterBlogs.append(data)
-});
+  // API call that gets the most recent blogs first and displays them on screen
+  $.get("/api/blogs/?&order=DESC").then(function (data) {
+    FilterBlogs.append(data);
+    if ($("#BlogList").text().trim() === "") {
+      FilterBlogs.text("It looks like there are no blogs posted yet.");
+    }
+  });
 
-DropDowns.change(function() {
+
+  // Dropdown listener that listens for change in dropdown menu, then sends API call to get filters blogs list according to selected dropdowns
+  // This allows user to filter blogs by multiple attributes. For example, a user could filter another users blogs by sepcific category.
+  DropDowns.change(function () {
     FilterBlogs.empty();
-    let API = ""
+    let API = "";
     let UserId = $("#users").val();
     let age = $("#age").val();
     let categoryId = $("#categories").val();
 
-
     if (age === "newest") {
-        API += "/api/blogs/?order=DESC"
+      API += "/api/blogs/?order=DESC";
     } else if (age === "oldest") {
-        API += "/api/blogs/?order=ASC"
+      API += "/api/blogs/?order=ASC";
     }
 
     if (UserId !== "AllUsers") {
-        API += "&user_id=" + UserId;
+      API += "&user_id=" + UserId;
     }
 
     if (categoryId !== "AllCategories") {
-        API += "&category=" + categoryId;
+      API += "&category=" + categoryId;
     }
 
-    $.get(API).then(function(data) {
-        FilterBlogs.append(data)
+    $.get(API).then(function (data) {
+      FilterBlogs.append(data);
+      if ($("#BlogList").text().trim() === "") {
+        FilterBlogs.text("It looks like there are no that match your filter.");
+      }
     });
-});
+  });
 
-$("#SearchFilteresBlogs").keyup(function() {
-    let SearchFilteresBlogs = document.getElementById("SearchFilteresBlogs").value.toUpperCase();
-    let BlogList = document.getElementById("BlogList").getElementsByTagName("li");
+  // This keyup listener function will filter through blogs locally and search for keyword in title, body, mood, cetegory, or user.
+  $("#SearchFilteresBlogs").keyup(function () {
+    let SearchFilteresBlogs = $("#SearchFilteresBlogs").val().toUpperCase();
+    let BlogList = document.getElementsByClassName("blogSearch");
     for (let i = 0; i < BlogList.length; i++) {
-        let BlogTitles = BlogList[i].getElementsByTagName("a")[0];
-        let BlogDescriptions = BlogList[i].getElementsByTagName("a")[1];
-        let BlogAuthors = BlogList[i].getElementsByTagName("a")[2];
-        let BlogCategories = BlogList[i].getElementsByTagName("a")[3];
-        let BlogMood = BlogList[i].getElementsByTagName("a")[4];
-        let titleText = BlogTitles.textContent || BlogTitles.innerText;
-        let descriptionText = BlogDescriptions.textContent || BlogDescriptions.innerText;
-        let authorText = BlogAuthors.textContent || BlogAuthors.innerText;
-        let categoryText = BlogCategories.textContent || BlogCategories.innerText;
-        let moodText = BlogMood.textContent || BlogMood.innerText;
-        if (titleText.toUpperCase().indexOf(SearchFilteresBlogs) > -1 || 
-        descriptionText.toUpperCase().indexOf(SearchFilteresBlogs) > -1 || 
-        authorText.toUpperCase().indexOf(SearchFilteresBlogs) > -1 || 
-        categoryText.toUpperCase().indexOf(SearchFilteresBlogs) > -1 || 
-        moodText.toUpperCase().indexOf(SearchFilteresBlogs) > -1) {
-            BlogList[i].style.display = "";
-        } else {
-            BlogList[i].style.display = "none";
-        }
+      // The innerText property is key here for searching for blogs with the same string as the SearchFilteresBlogs input.
+      // It looks at the title, body, mood, category, and author of blogs, then it hides blogs that don't match SearchFilteresBlogs value.
+      if (BlogList[i].innerText.toUpperCase().indexOf(SearchFilteresBlogs) > -1) {
+        BlogList[i].style.display = "";
+      } else {
+        BlogList[i].style.display = "none";
+      }
     }
+  });
 });
